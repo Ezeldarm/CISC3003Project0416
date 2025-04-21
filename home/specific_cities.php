@@ -1,5 +1,10 @@
 <?php
-session_start();
+  // session_start();
+  $city = isset($_GET['city']) ? $_GET['city'] : '未知城市';
+  
+  // 从JSON文件读取城市数据
+  $cityData = json_decode(file_get_contents('./data/city.json'), true);
+  $cityData = isset($cityData[$city]) ? $cityData[$city] : ['title' => '未知城市'];
 ?>
 
 <!DOCTYPE html>
@@ -17,8 +22,70 @@ session_start();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0">
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/script.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<style>
+.rating-form {
+    background: #c3cfe2;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    margin: 6.5rem 0 5.5rem 0;
+}
+
+.rating-form h3 {
+    color: #2c3e50;
+    margin-bottom: 5rem;
+    text-align: center;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+    padding: 1rem;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.form-group:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.star-rating {
+    display: flex;
+    gap: 5px;
+}
+
+.star-rating span {
+    cursor: pointer;
+    font-size: 2rem;
+    color: #ccc;
+    transition: all 0.2s ease;
+}
+
+.star-rating span:hover,
+.star-rating span.active {
+    color: #FFD700;
+    transform: scale(1.2);
+}
+
+.btn.submit-rating {
+    display: block;
+    width: 50%;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: var(--neutral-100);
+    color: var(--neutral-10);
+    border-radius: var(--radius-small);
+    box-shadow: var(--shadow-3);
+    transition: var(--transition-duration-quick) var(--transition-easing-quick);
+}
+
+.btn.submit-rating:where(:hover, :focus-visible) { background-color: var(--neutral-90); }
+</style>
 <body>
     <?php include 'header.php'; ?>
     <?php include 'sidebar.php'; ?>
@@ -27,32 +94,30 @@ session_start();
             <div>
                 <section class="hero">
                     <div class="container">
-                        <div class="hero-content">
-                            <h2 class="headline-large hero-title">Travel China Like a Pro.</h2>
+                        <div class="hero-content" >
+                            <h2 class="headline-large hero-title"><?php echo $cityData['title']; ?></h2>
                             <p class="body-large hero-text">
-                                Your Starter Pack Essentials — from custom tips to community insights.
+                            <?php echo $cityData['description']; ?>
                             </p>
-                            <form action="./" method="get" class="search-bar">
+                            <form action="./" method="get" class="search-bar" style="display: none">
                                 <div class="title-large card-text">Swipe like a game.<br> Get smart travel tips made just for you.</div>   
                                 <button type="submit" class="search-btn">
                                     <span class="label-medium">Let's Go!</span>
                                 </button>
                             </form>
                         </div>
-                        <img src="./assets/images/hero.jpg" width="1240" height="840" class="bg-pattern" alt="bg">
+                        <img src="<?php echo isset($cityData['hero_image']) ? $cityData['hero_image'] : ''; ?>" width="1240" height="840" class="bg-pattern" alt="bg">
                     </div>
                 </section>
                 <section class="section property">
-                    <div class="container">
+                    <div class="container" style="display: none">
                         <div class="title-wrapper">
                             <div>
-                                <h2 class="section-title headline-small">You Journey starts in...</h2>
-                                <p class="section-text body-large">
-                                    Choose a city as your destination and get started with your travel.
-                                </p>
+                                <h2 class="section-title headline-small">This is a city that...</h2>
+                                <p><?php echo isset($cityData['overview']) ? $cityData['overview'] : '暂无城市概述'; ?></p>
                             </div>
-                            <a href="cities.html" class="btn btn-outline">
-                                <span class="label-medium">Explore more</span>
+                            <a href="https://www.discoverhongkong.com/eng/index.html" class="btn btn-outline">
+                                <span class="label-medium">More Inf.</span>
                                 <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
                             </a>
                         </div>
@@ -120,36 +185,161 @@ session_start();
                             </div>
                         </div>
                     </div>
+                    <div class="title-wrapper" style="padding: 0 20px">
+                        <div>
+                            <h2 class="section-title headline-small">It's a city that...</h2>
+                            <p><?php echo isset($cityData['overview']) ? $cityData['overview'] : '暂无城市概述'; ?></p>
+                        </div>
+                        <a href="https://www.discoverhongkong.com/eng/index.html" class="btn btn-outline">
+                            <span class="label-medium">More Inf.</span>
+                            <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
+                        </a>
+                    </div>
+                    <div class="container" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                    <?php if(isset($cityData['attractions'])): ?>
+                        <?php 
+                            $showAll = isset($_GET['show_all']) && $_GET['show_all'] === 'true';
+                            $attractionCount = count($cityData['attractions']);
+                            $displayAttractions = $showAll ? $cityData['attractions'] : array_slice($cityData['attractions'], 0, 4);
+                        ?>
+                        <?php foreach($displayAttractions as $attraction): ?>
+                            <div class="attraction-item" onclick="window.open('<?php echo $attraction['website']; ?>', '_blank')" style="display: flex; flex: 0 0 calc(50% - 20px); margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 8px; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.boxShadow='0 0 10px rgba(0,0,0,0.2)'; this.style.transform='translateY(-5px)';" onmouseout="this.style.boxShadow='none'; this.style.transform='none';">
+                            <div class="attraction-image" style="flex: 0 0 200px; margin-right: 20px;">
+                                <img src="<?php echo $attraction['image']; ?>" alt="<?php echo $attraction['name']; ?>" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px;">
+                            </div>
+                            <div class="attraction-info" style="flex: 1; display: grid; grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 10px;">
+                                <span class="attraction-name" style="font-size: 18px; font-weight: bold; align-self: start;"><?php echo $attraction['name']; ?></span>
+                                <p class="attraction-desc" style="color: #666; align-self: end;"><?php echo $attraction['desc']; ?></p>
+                            </div>
+                            </div>
+                        <?php endforeach; ?>
+                        <?php if($attractionCount > 4): ?>
+                            <div class="toggle-attractions" style="width: 100%; text-align: center; margin: 20px 0; clear: both;">
+                            <button onclick="toggleAttractions()" id="toggleBtn" style="padding: 10px 20px; color: #4CAF50; border: none; border-radius: 4px; cursor: pointer; background: none; margin: 0 auto; display: block;">
+                                <?php echo $showAll ? '<---- close ---->' : '<---- open (' . ($attractionCount - 4) . ' more) ---->' ?>
+                            </button>
+                            <script>
+                                function toggleAttractions() {
+                                const attractions = document.querySelectorAll('.attraction-item');
+                                const toggleBtn = document.getElementById('toggleBtn');
+                                const showAll = !toggleBtn.textContent.includes('close');
+                                
+                                // Update URL parameter to maintain state
+                                const url = new URL(window.location.href);
+                                url.searchParams.set('show_all', showAll);
+                                window.history.pushState({}, '', url);
+                                
+                                // Scroll to current position before reload
+                                const scrollPosition = window.scrollY;
+                                window.location.reload();
+                                window.scrollTo(0, scrollPosition);
+                                }
+                            </script>
+                            </div>
+                        <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                 </section>
                 <section class="section feature" aria-labelledby="feature-label">
                     <div class="container">
-                        <figure class="feature-banner">
-                            <img src="./assets/images/feature-banner-1.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">
-                        </figure>
+                        <div class="rating-form">
+                            <h3 class="title-medium">Rating for city</h3>
+                            <form method="post" action="">
+                            <div class="form-group">
+                                    <label>food</label>
+                                    <div class="star-rating">
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <input type="hidden" name="attractions_rating" value="0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>clothing</label>
+                                    <div class="star-rating">
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'attractions')">star</span>
+                                        <input type="hidden" name="attractions_rating" value="0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>accommodation</label>
+                                    <div class="star-rating">
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'food')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'food')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'food')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'food')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'food')">star</span>
+                                        <input type="hidden" name="food_rating" value="0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>transport</label>
+                                    <div class="star-rating">
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'transport')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'transport')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'transport')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'transport')">star</span>
+                                        <span class="material-symbols-rounded" onclick="setRating(this, 'transport')">star</span>
+                                        <input type="hidden" name="transport_rating" value="0">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn submit-rating">Submit</button>
+                            </form>
+                            <script>
+                                function setRating(element, category) {
+                                    const stars = element.parentElement.querySelectorAll('span');
+                                    const hiddenInput = element.parentElement.querySelector('input[type="hidden"]');
+                                    const clickedIndex = Array.from(stars).indexOf(element);
+                                    
+                                    stars.forEach((star, index) => {
+                                        star.style.color = index <= clickedIndex ? '#FFD700' : '#ccc';
+                                    });
+                                    
+                                    hiddenInput.value = clickedIndex + 1;
+                                }
+                            </script>
+                        </div>
                         <div class="feature-content">
-                            <p class="title-small feature-text">Article</p>
-                            <h2 class="headline-large" id="feature-label">China Travel 101: Essential Prep Before You Go</h2>
-                            <p class="body-large feature-text">
-                                Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here’s your must-know checklist to avoid surprises and travel like a savvy explorer.
-                            </p>
-                            <ul class="feature-list">
-                                <li class="feautre-item">
-                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Cash & Payments</span>
-                                </li>
-                                <li class="feautre-item">
-                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium"> Must-Have Apps</span>
-                                </li>
-                                <li class="feautre-item">
-                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Internet & SIM Cards</span>
-                                </li>
-                                <li class cathodic="feautre-item">
-                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Cultural Prep</span>
-                                </li>
-                            </ul>
+                            <?php if(isset($cityData['ratings'])): ?>
+                                <div class="rating-section" style="margin-top: 20px; padding: 20px; background: #f8f8f8; border-radius: 8px;">
+                                    <h3 class="title-medium" style="margin-bottom: 15px;">city rating</h3>
+                                    <?php if(isset($cityData['ratings'])): ?>
+                                        <?php foreach($cityData['ratings'] as $category => $rating): ?>
+                                            <div class="rating-item" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+                                                <div class="rating-name" style="font-weight: bold; margin-bottom: 5px;"><?php echo $category; ?></div>
+                                                <div class="rating-stars" style="display: flex; align-items: center; margin-bottom: 5px;">
+                                                    <div style="position: relative; display: inline-flex;">
+                                                        <?php 
+                                                        $fullStars = floor($rating['score']);
+                                                        $partialStar = $rating['score'] - $fullStars;
+                                                        for($i=0; $i<5; $i++): ?>
+                                                            <span class="material-symbols-rounded" style="color: #ccc;">star</span>
+                                                        <?php endfor; ?>
+                                                        <div style="position: absolute; top: 0; left: 0; width: <?php echo ($fullStars * 20); ?>%; height: 100%; overflow: hidden; display: flex; flex-direction: row;">
+                                                            <?php for($i = 0; $i < $fullStars; $i++): ?>
+                                                                <span class="material-symbols-rounded" style="color: #FFD700;">star</span>
+                                                            <?php endfor; ?>
+                                                        </div>
+                                                        <?php if($partialStar > 0): ?>
+                                                        <div style="position: absolute; top: 0; left: <?php echo ($fullStars * 20); ?>%; width: <?php echo ($partialStar * 20); ?>%; height: 100%; overflow: hidden;">
+                                                            <span class="material-symbols-rounded" style="color: #FFD700;">star</span>
+                                                        </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <span style="margin-left: 5px;"><?php echo $rating['score']; ?>/5</span>
+                                                </div>
+                                                <div class="rating-desc" style="color: #666;"><?php echo $rating['description']; ?></div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </section>
@@ -157,8 +347,7 @@ session_start();
                     <div class="container">
                         <div class="title-wrapper">
                             <div>
-                                <p class="section-subtitle title-medium">Our Customers</p>
-                                <h2 class="section-title headline-medium">We Help 1000+ Family Find Their True Home</h2>
+                                <h2 class="section-title headline-medium">Last Post</h2>
                                 <ul class="avatar-list">
                                     <li class="avatar">
                                         <img src="./assets/images/avatar-1.jpg" width="120" height="80" loading="lazy" alt="John smith" class="img-cover">
