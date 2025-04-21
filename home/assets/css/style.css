@@ -7,7 +7,18 @@
  */
 
 
-
+ @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0');
+ @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+ 
+ /* 確保 Material Symbols 字體樣式 */
+ .material-symbols-rounded {
+     font-family: 'Material Symbols Rounded';
+     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+     font-size: 24px;
+     line-height: 1;
+     display: inline-block;
+     color: #666;
+ }
 
 
 /*-----------------------------------*\
@@ -149,22 +160,116 @@
   }
   
   img { height: auto; }
-  
   input,
-  button,
-  select {
+button {
     background: none;
     border: none;
     font: inherit;
-  }
-  
-  button { cursor: pointer; }
-  
-  input,
-  select {
-    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    cursor: pointer;
+}
+
+input {
     outline: none;
-  }
+}
+
+/* 頂部導航列 */
+.topnav {
+    position: relative;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 16px;
+    background-color: transparent;
+}
+
+/* 搜尋容器 */
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+/* 搜尋包裹器 */
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 24px;
+    padding: 4px 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* 輸入框 */
+.search-wrapper input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    font-size: 16px;
+    color: #333;
+    background: transparent;
+}
+
+.search-wrapper input[type="text"]::placeholder {
+    color: #999;
+    font-weight: 400;
+}
+
+/* 搜尋按鈕（放大鏡圖片） */
+.search-wrapper .search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    transition: transform 0.3s ease;
+}
+
+.search-wrapper .search-btn:hover {
+    transform: scale(1.1); /* 懸停時縮放，與網站動畫一致 */
+}
+
+.search-wrapper .search-btn .search-icon {
+    width: 24px;
+    height: 24px;
+    filter: grayscale(100%) brightness(0.6); /* 默認灰色，與原 #666 一致 */
+    transition: filter 0.3s ease;
+}
+
+.search-wrapper .search-btn:hover .search-icon {
+    filter: none; /* 懸停時恢復原色或可自訂 */
+}
+
+/* 聚焦效果 */
+.search-wrapper:focus-within {
+    border-color: #e91e63;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 600px) {
+    .topnav {
+        justify-content: center;
+        padding: 12px;
+    }
+    .search-wrapper {
+        max-width: 100%;
+    }
+    .search-wrapper input[type="text"] {
+        font-size: 14px;
+    }
+    .search-wrapper .search-btn .search-icon {
+        width: 20px;
+        height: 20px; /* 小螢幕略縮小圖標 */
+    }
+}
   
   address { font-style: normal; }
   
@@ -1128,12 +1233,17 @@
     }
 
     .navbar{
-      width: 60%;
+      width: 50%;
+    }
+
+    .navbar input{
+      width: 200px;
     }
 
     .navbar-wrapper {
       margin-left: auto; /* 关键：将 wrapper 推到右侧 */
       justify-content: end; /* 可选：确保内部内容靠右对齐 */
+      align-items: center;
     }
   
     .navbar,
