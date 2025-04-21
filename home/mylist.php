@@ -1,23 +1,28 @@
 <?php
 session_start();
-
-// 初始化收藏清單
-if (!isset($_SESSION['favorites'])) {
-    $_SESSION['favorites'] = [];
-}
-
-// 處理移除收藏的請求
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_favorite'])) {
-    $city_id = $_POST['city_id'];
-    foreach ($_SESSION['favorites'] as $index => $city) {
-        if ($city['id'] == $city_id) {
-            unset($_SESSION['favorites'][$index]);
-            break;
-        }
-    }
-    // 重新索引陣列
-    $_SESSION['favorites'] = array_values($_SESSION['favorites']);
-}
+$favorites = [
+    [
+        'id' => 1,
+        'name' => 'Hong Kong',
+        'title' => 'Hong Kong SAR',
+        'image' => './assets/images/property-1.jpg',
+        'description' => 'Disneyland, Victoria Peak, Ocean Park...'
+    ],
+    [
+        'id' => 3,
+        'name' => 'Shanghai',
+        'title' => 'Shanghai, China',
+        'image' => './assets/images/property-3.jpg',
+        'description' => 'The Bund, Oriental Pearl Tower, Yu Garden...'
+    ],
+    [
+        'id' => 4,
+        'name' => 'Beijing',
+        'title' => 'Beijing, China',
+        'image' => './assets/images/property-4.jpg',
+        'description' => 'Great Wall, Forbidden City, Tiananmen Square...'
+    ]
+];
 ?>
 
 <!DOCTYPE html>
@@ -25,86 +30,164 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_favorite'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的清單</title>
+    <title>MyList</title>
     <meta name="title" content="China Travel Starter Pack">
     <meta name="description" content="This is a realestate website devloped by Group 02">
     <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0">
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/script.js" defer></script>
     <style>
+        /* 收藏清單樣式 */
+        
         .favorite-list {
             display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 24px;
             padding: 16px;
             animation: slideIn 0.5s ease-out;
         }
+
         .favorite-card {
-            position: relative;
             background: white;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.3s ease;
         }
-        .favorite-card.removing {
-            opacity: 0;
-            transform: translateY(20px);
-        }
+
         .favorite-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-4px); /* 懸停上移，與 cities.php 一致 */
         }
+
         .favorite-card .card-banner {
             position: relative;
         }
-        .favorite-card .remove-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: #ff4444;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.3s ease;
+
+        .favorite-card .img-holder {
+            aspect-ratio: var(--width) / var(--height);
+            overflow: hidden;
         }
-        .favorite-card .remove-btn:hover {
-            background: #cc0000;
+
+        .favorite-card .img-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
+
+        .favorite-card .card-content {
+            padding: 16px;
+        }
+
+        .favorite-card .title-large {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .favorite-card .title-small {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #e91e63; /* 與網站高亮色一致 */
+            text-decoration: none;
+        }
+
+        .favorite-card .card-text {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
         .empty-message {
             text-align: center;
             padding: 48px;
             color: #666;
         }
+
         .empty-message .material-symbols-rounded {
             font-size: 48px;
             color: #e91e63;
             margin-bottom: 16px;
         }
+
+        .empty-message .headline-small {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .empty-message .body-large {
+            font-size: 1.125rem;
+            margin-bottom: 24px;
+        }
+
+        .btn.btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: 1px solid #e91e63;
+            border-radius: 24px;
+            color: #e91e63;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .btn.btn-outline:hover {
+            background: #e91e63;
+            color: white;
+        }
+
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-    </style>
-    <script>
-        function removeFavorite(form) {
-            const card = form.closest('.favorite-card');
-            card.classList.add('removing');
-            setTimeout(() => form.submit(), 300);
+
+        /* 響應式調整 */
+        @media screen and (max-width: 600px) {
+            .favorite-list {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .favorite-card .title-large {
+                font-size: 1.25rem;
+            }
+
+            .favorite-card .title-small {
+                font-size: 1rem;
+            }
+
+            .favorite-card .card-text {
+                font-size: 0.875rem;
+            }
+
+            .empty-message {
+                padding: 24px;
+            }
+
+            .empty-message .material-symbols-rounded {
+                font-size: 36px;
+            }
+
+            .empty-message .headline-small {
+                font-size: 1.5rem;
+            }
         }
-    </script>
+
+        .main-content {
+            padding-top: 100px; /* 根據 header 高度調整 */
+        }
+
+        .title-wrapper{
+            padding-left: 20px;
+        }
+    </style>
 </head>
 <body>
     <?php include 'header.php'; ?>
     <?php include 'sidebar.php'; ?>
+
     <div class="main-content">
         <main>
             <div>
@@ -112,13 +195,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_favorite'])) {
                     <div class="container">
                         <div class="title-wrapper">
                             <div>
-                                <h2 class="section-title headline-small">我的喜愛城市</h2>
+                                <h2 class="section-title headline-small">My favorite city</h2>
                                 <p class="section-text body-large">
                                     這裡是您收藏的旅遊目的地，隨時規劃您的下一次冒險！
                                 </p>
                             </div>
                         </div>
-                        <?php if (empty($_SESSION['favorites'])) { ?>
+                        <?php if (empty($favorites)) { ?>
                             <div class="empty-message">
                                 <span class="material-symbols-rounded">favorite</span>
                                 <h3 class="headline-small">您的清單目前為空</h3>
@@ -130,19 +213,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_favorite'])) {
                             </div>
                         <?php } else { ?>
                             <div class="favorite-list">
-                                <?php foreach ($_SESSION['favorites'] as $city) { ?>
+                                <?php foreach ($favorites as $city) { ?>
                                     <div class="favorite-card">
                                         <div class="card-banner">
                                             <figure class="img-holder" style="--width: 585; --height: 390;">
                                                 <img src="<?php echo $city['image']; ?>" width="585" height="390" alt="<?php echo htmlspecialchars($city['title']); ?>" class="img-cover">
                                             </figure>
-                                            <form method="POST" style="display: inline;">
-                                                <input type="hidden" name="city_id" value="<?php echo $city['id']; ?>">
-                                                <button type="button" class="remove-btn" aria-label="移除收藏" onclick="removeFavorite(this.form)">
-                                                    <span class="material-symbols-rounded" aria-hidden="true">close</span>
-                                                </button>
-                                                <input type="hidden" name="remove_favorite" value="1">
-                                            </form>
                                         </div>
                                         <div class="card-content">
                                             <span class="title-large"><?php echo $city['name']; ?></span>
