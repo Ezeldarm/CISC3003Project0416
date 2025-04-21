@@ -176,138 +176,7 @@ input {
     outline: none;
 }
 
-/* 頂部導航列 */
-.topnav {
-    position: relative;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 16px;
-    background-color: transparent;
-}
 
-/* 搜尋容器 */
-.search-container {
-    display: flex;
-    align-items: center;
-}
-
-/* 搜尋包裹器 */
-.search-wrapper {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 24px;
-    padding: 4px 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-    width: 100%;
-    max-width: 300px;
-}
-
-/* 輸入框 */
-.search-wrapper input[type="text"] {
-    flex: 1;
-    padding: 8px;
-    font-size: 16px;
-    color: #333;
-    background: transparent;
-}
-
-.search-wrapper input[type="text"]::placeholder {
-    color: #999;
-    font-weight: 400;
-}
-
-/* 搜尋按鈕（放大鏡圖片） */
-.search-wrapper .search-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    transition: transform 0.3s ease;
-}
-
-.search-wrapper .search-btn:hover {
-    transform: scale(1.1); /* 懸停時縮放，與網站動畫一致 */
-}
-
-.search-wrapper .search-btn .search-icon {
-    width: 24px;
-    height: 24px;
-    filter: grayscale(100%) brightness(0.6); /* 默認灰色，與原 #666 一致 */
-    transition: filter 0.3s ease;
-}
-
-.search-wrapper .search-btn:hover .search-icon {
-    filter: none; /* 懸停時恢復原色或可自訂 */
-}
-
-/* 聚焦效果 */
-.search-wrapper:focus-within {
-    border-color: #e91e63;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* 響應式設計 */
-@media screen and (max-width: 600px) {
-    .topnav {
-        justify-content: center;
-        padding: 12px;
-    }
-    .search-wrapper {
-        max-width: 100%;
-    }
-    .search-wrapper input[type="text"] {
-        font-size: 14px;
-    }
-    .search-wrapper .search-btn .search-icon {
-        width: 20px;
-        height: 20px; /* 小螢幕略縮小圖標 */
-    }
-}
-  
-  address { font-style: normal; }
-  
-  select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
-  
-  html {
-    font-family: var(--font-primary);
-    font-size: var(--fs-base);
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    background-color: var(--neutral-98);
-    color: var(--neutral-5);
-    font-size: var(--fs-body-medium);
-    line-height: var(--lh-body-medium);
-    display: grid;
-    grid-template-columns: 175px 1fr;
-    grid-template-rows: auto 1fr;
-    min-height: 100vh;
-  }
-  
-  ::-webkit-scrollbar { width: 12px; }
-  
-  ::-webkit-scrollbar-track { background-color: var(--neutral-90); }
-  
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--neutral-60);
-    border-radius: 4px;
-  }
-  
-  
-  
-  
   
   /*-----------------------------------*\
     #TYPOGRAPHY
@@ -683,7 +552,134 @@ input {
   .navbar .btn { min-width: 100%; }
   
   
-  
+  /* 頂部導航列 */
+.topnav {
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 16px;
+  background-color: transparent;
+}
+
+/* 搜尋容器 */
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+/* 搜尋包裹器 */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 24px;
+  padding: 4px 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  width: 100%;
+  min-width: 500px;
+}
+
+/* 輸入框 */
+.search-wrapper input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+  color: #333;
+  background: transparent;
+}
+
+.search-wrapper input[type="text"]::placeholder {
+  color: #999;
+  font-weight: 400;
+}
+
+/* 搜尋按鈕（放大鏡圖片） */
+.search-wrapper .search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  transition: transform 0.3s ease;
+}
+
+.search-wrapper .search-btn:hover {
+  transform: scale(1.1); /* 懸停時縮放，與網站動畫一致 */
+}
+
+.search-wrapper .search-btn .search-icon {
+  width: 24px;
+  height: 24px;
+  filter: grayscale(100%) brightness(0.6); /* 默認灰色，與原 #666 一致 */
+  transition: filter 0.3s ease;
+}
+
+.search-wrapper .search-btn:hover .search-icon {
+  filter: none; /* 懸停時恢復原色或可自訂 */
+}
+
+/* 聚焦效果 */
+.search-wrapper:focus-within {
+  border-color: #e91e63;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 600px) {
+  .topnav {
+      justify-content: center;
+      padding: 12px;
+  }
+  .search-wrapper {
+      max-width: 100%;
+  }
+  .search-wrapper input[type="text"] {
+      font-size: 14px;
+  }
+  .search-wrapper .search-btn .search-icon {
+      width: 20px;
+      height: 20px; /* 小螢幕略縮小圖標 */
+  }
+}
+
+address { font-style: normal; }
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+html {
+  font-family: var(--font-primary);
+  font-size: var(--fs-base);
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--neutral-98);
+  color: var(--neutral-5);
+  font-size: var(--fs-body-medium);
+  line-height: var(--lh-body-medium);
+  display: grid;
+  grid-template-columns: 175px 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width: 12px; }
+
+::-webkit-scrollbar-track { background-color: var(--neutral-90); }
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--neutral-60);
+  border-radius: 4px;
+}
   
   
   /*-----------------------------------*\
