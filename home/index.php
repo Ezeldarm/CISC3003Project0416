@@ -145,7 +145,7 @@ session_start();
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
                                     <span class="body-medium">Internet & SIM Cards</span>
                                 </li>
-                                <li class cathodic="feautre-item">
+                                <li class="feautre-item">
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
                                     <span class="body-medium">Cultural Prep</span>
                                 </li>
@@ -153,7 +153,84 @@ session_start();
                         </div>
                     </div>
                 </section>
-                <section class="section story">
+
+                <section class="section forum" aria-labelledby="forum-label">
+                    <div class="container">
+                        <div class="title-wrapper">
+                            <div>
+                                <p class="section-subtitle title-medium">Community Insights</p>
+                                <h2 class="section-title headline-medium" id="forum-label">Travel Stories & Tips from China Explorers</h2>
+                                <p class="section-text body-large">
+                                    Join our community of travelers sharing their adventures, itineraries, and insider tips for exploring China.
+                                </p>
+                            </div>
+                            <a href="#" class="btn btn-outline">
+                                <span class="label-medium">View All Posts</span>
+                                <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
+                            </a>
+                        </div>
+                        <ul class="forum-list">
+                            <li class="forum-post">
+                                <div class="post-header">
+                                    <figure class="post-avatar">
+                                        <img src="./assets/images/avatar-1.jpg" width="56" height="56" loading="lazy" alt="Emma_TravelBug" class="img-cover">
+                                    </figure>
+                                    <div class="post-meta">
+                                        <h3 class="title-small">Emma_TravelBug</h3>
+                                        <time class="body-medium" datetime="2025-04-15">April 15, 2025</time>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <h4 class="title-medium post-title">
+                                        <a href="#">My Whirlwind Week in Beijing & Shanghai</a>
+                                    </h4>
+                                    <p class="body-large post-text">
+                                        Just got back from an incredible 7-day trip to China! Started in Beijing with the Great Wall at Mutianyu—absolutely breathtaking, though the climb was no joke. Then explored the Forbidden City and indulged in Peking duck at Da Dong. Took the high-speed train to Shanghai, where The Bund at night is pure magic... 
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="forum-post">
+                                <div class="post-header">
+                                    <figure class="post-avatar">
+                                        <img src="./assets/images/avatar-2.jpg" width="56" height="56" loading="lazy" alt="Luca_Wanderer" class="img-cover">
+                                    </figure>
+                                    <div class="post-meta">
+                                        <h3 class="title-small">Luca_Wanderer</h3>
+                                        <time class="body-medium" datetime="2025-04-10">April 10, 2025</time>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <h4 class="title-medium post-title">
+                                        <a href="#">Navigating Hong Kong Like a Local</a>
+                                    </h4>
+                                    <p class="body-large post-text">
+                                        Hong Kong was a blast! Spent my first day hiking Dragon’s Back—stunning views and not too crowded. Then hit the street markets in Mong Kok for some bargain souvenirs and the best dim sum at Tim Ho Wan. Pro tip: get a local SIM card at 7-Eleven for cheap data... 
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="forum-post">
+                                <div class="post-header">
+                                    <figure class="post-avatar">
+                                        <img src="./assets/images/avatar-3.jpg" width="56" height="56" loading="lazy" alt="Sophie_Adventures" class="img-cover">
+                                    </figure>
+                                    <div class="post-meta">
+                                        <h3 class="title-small">Sophie_Adventures</h3>
+                                        <time class="body-medium" datetime="2025-04-05">April 5, 2025</time>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <h4 class="title-medium post-title">
+                                        <a href="#">Chasing History in Xi’an</a>
+                                    </h4>
+                                    <p class="body-large post-text">
+                                        Xi’an stole my heart! The Terracotta Warriors were mind-blowing—definitely worth the hype. Cycled around the ancient city wall for a unique perspective, and the Muslim Quarter’s food stalls were a highlight (lamb skewers, anyone?). Highly recommend downloading DiDi for easy rides... 
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--<section class="section story">
                     <div class="container">
                         <div class="title-wrapper">
                             <div>
@@ -293,7 +370,7 @@ session_start();
                             </li>
                         </ul>
                     </div>
-                </section>
+                </section>-->
             </div>
         </main>
         <?php include 'footer.php'; ?>
