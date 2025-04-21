@@ -278,8 +278,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_profile"])){
                 </div>
             </div>
         </main>
+        <?php include 'footer.php'; ?>
     </div>
-    <?php include 'footer.php'; ?>
+    
 
     <script>
         // 确保页脚正确显示

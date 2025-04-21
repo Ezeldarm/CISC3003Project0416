@@ -395,8 +395,9 @@ if($stmt = mysqli_prepare($link, $sql)){
                 <?php endif; ?>
             </div>
         </main>
+        <?php include 'footer.php'; ?>
     </div>
-    <?php include 'footer.php'; ?>
+    
 
     <script>
         // 确保页脚正确显示
