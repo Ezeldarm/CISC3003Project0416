@@ -1,0 +1,61 @@
+{
+  "Hong Kong": {
+    "title": "Hong Kong",
+    "description": "One of the world's top three financial centers",
+    "hero_image": "./assets/images/property-1.jpg",
+    "overview": "Hong Kong is a highly prosperous free port and international metropolis, known as 'Nylonkong' along with New York and London. It is the world's third largest financial center, an important international hub for finance, trade, shipping and innovation technology. It is also one of the world's freest economies and most competitive cities, ranked third among global first-tier cities by GaWC.",
+    "attractions": [
+      {"name": "Disneyland", "image": "./assets/images/hk_1.jpg", "desc": "A magical fairy tale world, top choice for family trips", "website": "https://www.hongkongdisneyland.com/"},
+      {"name": "Victoria Peak", "image": "./assets/images/hk_2.jpg", "desc": "Best spot for panoramic views of Hong Kong", "website": "https://www.discoverhongkong.com/eng/explore/great-outdoor/wellness/the-peak.html"}, 
+      {"name": "Ocean Park", "image": "./assets/images/hk_3.jpg", "desc": "Ocean-themed park combining entertainment and education", "website": "https://www.oceanpark.com.hk/en"}, 
+      {"name": "Avenue of Stars", "image": "./assets/images/hk_4.jpg", "desc": "Avenue of Stars honoring Hong Kong film celebrities", "website": "https://www.avenueofstars.com.hk/en/"}, 
+      {"name": "Star Ferry", "image": "./assets/images/hk_5.jpg", "desc": "Century-old Star Ferry service", "website": "https://www.starferry.com.hk/en/home"}, 
+      {"name": "Tsim Sha Tsui", "image": "./assets/images/hk_6.jpg", "desc": "Paradise for shopping and cuisine", "website": "https://en.wikipedia.org/wiki/Tsim_Sha_Tsui"}, 
+      {"name": "Lantau Island", "image": "./assets/images/hk_7.jpg", "desc": "Home to Lantau Mountain and Tian Tan Buddha", "website": "https://www.lantau-island.com/"}],
+    "ratings": {
+      "food": {"score": 4.5, "description": "Culinary capital with cha chaan tengs, Michelin restaurants, street food, and fast-paced dining culture."},
+      "clothing": {"score": 4.0, "description": "East-meets-West fashion, shopping paradise, hot summers and mild winters, blending trends with affordability."},
+      "accommodation": {"score": 3.3, "description": "World's most expensive housing market, subdivided flats and public housing common, with tight living spaces."},
+      "transport": {"score": 4.7, "description": "MTR-dominated transport with buses and minibuses, Octopus card system, and few private vehicles."}
+    }
+  },
+  "Macao": {
+    "title": "Macao",
+    "description": "中西文化交汇之地",
+    "hero_image": "./assets/images/property-2.jpg",
+    "overview": "澳门是中国的一个特别行政区，以其独特的文化融合和历史遗迹而闻名。作为前葡萄牙殖民地，澳门保留了丰富的欧洲建筑风格，同时融合了中华文化。这里不仅是世界著名的博彩中心，还拥有联合国教科文组织世界遗产'澳门历史城区'。",
+    "attractions": [{"name": "Ruins of St. Paul's", "image": "./assets/images/mo_1.jpg", "desc": "澳门标志性历史遗迹", "website": ""}, {"name": "Grand Lisboa", "image": "./assets/images/mo_2.jpg", "desc": "澳门著名赌场酒店", "website": ""}, {"name": "Macau Tower", "image": "./assets/images/mo_3.jpg", "desc": "澳门地标，高空冒险体验", "website": ""}, {"name": "A-Ma Temple", "image": "./assets/images/mo_4.jpg", "desc": "澳门最古老的庙宇", "website": ""}, {"name": "Senado Square", "image": "./assets/images/mo_5.jpg", "desc": "葡萄牙风格的历史广场", "website": ""}, {"name": "Cotai Strip", "image": "./assets/images/mo_6.jpg", "desc": "豪华酒店与赌场集中地", "website": ""}],
+    "ratings": {
+      "food": {"score": 4.2, "description": "美食评分"},
+      "clothing": {"score": 3.9, "description": "购物评分"},
+      "accommodation": {"score": 4.1, "description": "住宿评分"},
+      "transport": {"score": 4.3, "description": "交通评分"}
+    }
+  },
+  "Shanghai": {
+    "title": "Shanghai, China",
+    "description": "魔都 经济金融中心",
+    "hero_image": "./assets/images/property-3.jpg",
+    "overview": "上海是中国最大的城市和经济中心，也是全球重要的金融、贸易和航运枢纽。作为长江三角洲城市群的核心城市，上海以其现代化的天际线、丰富的历史建筑和多元文化而闻名。外滩的万国建筑博览群与陆家嘴的摩天大楼形成鲜明对比，展现了城市的过去与未来。",
+    "attractions": [{"name": "The Bund", "image": "./assets/images/sh_1.jpg", "desc": "上海外滩，万国建筑博览", "website": ""}, {"name": "Oriental Pearl Tower", "image": "./assets/images/sh_2.jpg", "desc": "上海标志性电视塔", "website": ""}, {"name": "Yu Garden", "image": "./assets/images/sh_3.jpg", "desc": "江南古典园林代表作", "website": ""}, {"name": "Nanjing Road", "image": "./assets/images/sh_4.jpg", "desc": "中国最繁华商业街", "website": ""}, {"name": "Shanghai Disneyland", "image": "./assets/images/sh_5.jpg", "desc": "中国大陆首座迪士尼", "website": ""}, {"name": "Tianzifang", "image": "./assets/images/sh_6.jpg", "desc": "文艺小资聚集地", "website": ""}],
+    "ratings": {
+      "food": {"score": 4.6, "description": "美食评分"},
+      "clothing": {"score": 4.5, "description": "购物评分"},
+      "accommodation": {"score": 4.3, "description": "住宿评分"},
+      "transport": {"score": 4.8, "description": "交通评分"}
+    }
+  },
+  "Beijing": {
+    "title": "Beijing, China",
+    "description": "千年古都 现代都市",
+    "hero_image": "./assets/images/property-4.jpg",
+    "overview": "北京是中国的首都，拥有3000多年的建城史和800多年的建都史。作为全国政治、文化、国际交往和科技创新中心，北京融合了古老文明与现代活力。故宫、天坛等世界文化遗产见证了明清两代的辉煌，而鸟巢、水立方等现代建筑则展示了21世纪的中国风貌。",
+    "attractions": [{"name": "Great Wall", "image": "./assets/images/bj_1.jpg", "desc": "世界新七大奇迹之一", "website": ""}, {"name": "Forbidden City", "image": "./assets/images/bj_2.jpg", "desc": "明清两代皇家宫殿", "website": ""}, {"name": "Tiananmen Square", "image": "./assets/images/bj_3.jpg", "desc": "世界上最大的城市广场", "website": ""}, {"name": "Summer Palace", "image": "./assets/images/bj_4.jpg", "desc": "皇家园林，风景如画", "website": ""}, {"name": "Temple of Heaven", "image": "./assets/images/bj_5.jpg", "desc": "古代皇帝祭天场所", "website": ""}, {"name": "798 Art Zone", "image": "./assets/images/bj_6.jpg", "desc": "北京现代艺术中心", "website": ""}],
+    "ratings": {
+      "food": {"score": 4.4, "description": "美食评分"},
+      "clothing": {"score": 4.2, "description": "购物评分"},
+      "accommodation": {"score": 4.0, "description": "住宿评分"},
+      "transport": {"score": 4.6, "description": "交通评分"}
+    }
+  }
+}
