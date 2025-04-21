@@ -882,6 +882,12 @@
     display: grid;
     gap: 24px;
   }
+
+  .footer-brand h1{
+    font-size: 4rem;
+    line-height: 4rem;
+    text-align: center;
+  }
   
   .footer-text { margin-block: 16px; }
   
@@ -1119,7 +1125,15 @@
     .navbar-wrapper {
       all: unset;
       display: flex;
-      align-items: center;
+    }
+
+    .navbar{
+      width: 60%;
+    }
+
+    .navbar-wrapper {
+      margin-left: auto; /* 关键：将 wrapper 推到右侧 */
+      justify-content: end; /* 可选：确保内部内容靠右对齐 */
     }
   
     .navbar,

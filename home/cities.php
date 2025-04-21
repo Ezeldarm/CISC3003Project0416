@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>China Travel Starter Pack</title>
+    <title>City</title>
     <meta name="title" content="China Travel Starter Pack">
     <meta name="description" content="This is a realestate website devloped by Group 02">
     <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
@@ -20,36 +20,15 @@
     <div class="main-content">
         <main>
             <div>
-                <section class="hero">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h2 class="headline-large hero-title">Travel China Like a Pro.</h2>
-                            <p class="body-large hero-text">
-                                Your Starter Pack Essentials — from custom tips to community insights.
-                            </p>
-                            <form action="./" method="get" class="search-bar">
-                                <div class="title-large card-text">Swipe like a game.<br> Get smart travel tips made just for you.</div>   
-                                <button type="submit" class="search-btn">
-                                    <span class="label-medium">Let's Go!</span>
-                                </button>
-                            </form>
-                        </div>
-                        <img src="./assets/images/hero.jpg" width="1240" height="840" class="bg-pattern" alt="bg">
-                    </div>
-                </section>
                 <section class="section property">
                     <div class="container">
                         <div class="title-wrapper">
                             <div>
-                                <h2 class="section-title headline-small">You Journey starts in...</h2>
+                                <h2 class="section-title headline-small">All cities</h2>
                                 <p class="section-text body-large">
                                     Choose a city as your destination and get started with your travel.
                                 </p>
                             </div>
-                            <a href="cities.html" class="btn btn-outline">
-                                <span class="label-medium">Explore more</span>
-                                <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
-                            </a>
                         </div>
                         <div class="property-list">
                             <div class="card">
@@ -113,6 +92,66 @@
                                     <address class="body-medium card-text">Great Wall, Forbidden City, Tiananmen Square...</address>
                                 </div>
                             </div>
+                            <div class="card">
+                                <div class="card-banner">
+                                    <figure class="img-holder" style="--width: 585; --height: 390;">
+                                        <img src="./assets/images/property-5.jpg" width="585" height="390" alt="Beach Pros Realty Inc." class="img-cover">
+                                    </figure>
+                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
+                                    </button>
+                                </div>
+                                <div class="card-content">
+                                    <span class="title-large">Lijiang</span>
+                                    <h3><a href="#" class="title-small card-title">Yunnan, China</a></h3>
+                                    <address class="body-medium card-text">Jade Dragon Snow Mountain, Old Town of Lijiang, Lugu Lake...</address>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-banner">
+                                    <figure class="img-holder" style="--width: 585; --height: 390;">
+                                        <img src="./assets/images/property-6.jpg" width="585" height="390" alt="Keller Williams Elite Town Center" class="img-cover">
+                                    </figure>
+                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
+                                    </button>
+                                </div>
+                                <div class="card-content">
+                                    <span class="title-large">Chengdu</span>
+                                    <h3><a href="#" class="title-small card-title">Sichuan, China</a></h3>
+                                    <address class="body-medium card-text">Hot Pot, Pandas, Leshan Buddha...</address>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-banner">
+                                    <figure class="img-holder" style="--width: 585; --height: 390;">
+                                        <img src="./assets/images/property-7.jpg" width="585" height="390" alt="All Pros Real Estate" class="img-cover">
+                                    </figure>
+                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
+                                    </button>
+                                </div>
+                                <div class="card-content">
+                                    <span class="title-large">Guangzhou</span>
+                                    <h3><a href="#" class="title-small card-title">Guangdong, China</a></h3>
+                                    <address class="body-medium card-text">Yum Cha, Canton Tower, Chimelong Safari Park, Shamian Island...</address>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-banner">
+                                    <figure class="img-holder" style="--width: 585; --height: 390;">
+                                        <img src="./assets/images/property-8.jpg" width="585" height="390" alt="FIT Realty" class="img-cover">
+                                    </figure>
+                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
+                                    </button>
+                                </div>
+                                <div class="card-content">
+                                    <span class="title-large">Harbin</span>
+                                    <h3><a href="#" class="title-small card-title">Heilongjiang, China</a></h3>
+                                    <address class="body-medium card-text">Harbin Ice and Snow World, Zhongyang Pedestrain Street...</address>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -122,32 +161,71 @@
                             <img src="./assets/images/feature-banner-1.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">
                         </figure>
                         <div class="feature-content">
-                            <p class="title-small feature-text">Article</p>
-                            <h2 class="headline-large" id="feature-label">China Travel 101: Essential Prep Before You Go</h2>
+                            <h2 class="headline-medium" id="feature-label">We Specialize In Quality Home Renovations</h2>
                             <p class="body-large feature-text">
-                                Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here’s your must-know checklist to avoid surprises and travel like a savvy explorer.
+                                Looking to renovate your home to reflect your style and personality? Look no further than our team of experts who specialize in quality home renovations to transform your space into a dream home you’ll love. From design to execution.
                             </p>
                             <ul class="feature-list">
                                 <li class="feautre-item">
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Cash & Payments</span>
+                                    <span class="body-medium">Smart Home</span>
                                 </li>
                                 <li class="feautre-item">
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium"> Must-Have Apps</span>
+                                    <span class="body-medium">Beautiful Scene Around</span>
                                 </li>
                                 <li class="feautre-item">
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Internet & SIM Cards</span>
+                                    <span class="body-medium">Exceptional lifestyle</span>
                                 </li>
-                                <li class cathodic="feautre-item">
+                                <li class="feautre-item">
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Cultural Prep</span>
+                                    <span class="body-medium">Complete 24/7 Security</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </section>
+                <section class="section feature feature-2" aria-labelledby="feature-label-2">
+                    <div class="container">
+                        <figure class="feature-banner">
+                            <img src="./assets/images/feature-banner-2.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">
+                        </figure>
+                        <div class="feature-content">
+                            <h2 class="headline-medium" id="feature-label-2">We Are Experts In Historic Home Renovations</h2>
+                            <p class="body-large feature-text">
+                                Looking to renovate your home to reflect your style and personality? Look no further than our team of experts who specialize in quality home renovations to transform your space into a dream home you’ll love. From design to execution.
+                            </p>
+                            <ul class="feature-list">
+                                <li class="feautre-item">
+                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                    <span class="body-medium">Smart Home</span>
+                                </li>
+                                <li class="feautre-item">
+                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                    <span class="body-medium">Beautiful Scene Around</span>
+                                </li>
+                                <li class="feautre-item">
+                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                    <span class="body-medium">Exceptional lifestyle</span>
+                                </li>
+                                <li class="feautre-item">
+                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                    <span class="body-medium">Complete 24/7 Security</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <div class="section video">
+                    <div class="container">
+                        <div class="video-card">
+                            <button class="play-btn" aria-label="play video">
+                                <span class="material-symbols-rounded" aria-hidden="true">play_arrow</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <section class="section story">
                     <div class="container">
                         <div class="title-wrapper">
