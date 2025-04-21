@@ -680,6 +680,7 @@ body {
   background-color: var(--neutral-60);
   border-radius: 4px;
 }
+
   
   
   /*-----------------------------------*\
@@ -1272,6 +1273,39 @@ body {
     .footer-text { max-width: 400px; }
   
   }
+  /**
+   * responsive for smaller than 991px screen
+   */
+   @media (max-width: 991px) {
+    /* 隐藏侧边栏 */
+    .sidebar {
+      display: none;
+    }
+    
+    /* 调整主内容区域布局 */
+    body {
+      grid-template-columns: 1fr; /* 单列布局 */
+    }
+    
+    .main-content {
+      grid-column: 1; /* 占据全部宽度 */
+    }
+    
+    /* 调整header位置 */
+    .header {
+      grid-column: 1;
+    }
+    
+    /* 确保导航菜单在小屏幕上可用 */
+    .navbar {
+      display: none;
+    }
+    
+    .navbar.active {
+      display: grid;
+    }
+  }
+  
   
   
   
@@ -1634,3 +1668,134 @@ body {
     .footer-top .container { grid-template-columns: 580px repeat(3, 1fr); }
   
   }
+
+
+/*-----------------------------------*\
+  #MOBILE SIDEBAR
+\*-----------------------------------*/
+
+.mobile-sidebar {
+  display: none;
+  background: var(--neutral-100);
+  padding: 20px;
+  z-index: 999;
+  text-align: center;
+  max-height: calc(100vh - 72px);
+  overflow-y: auto;
+}
+
+.mobile-sidebar .nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.mobile-sidebar .nav-item {
+  width: 100%;
+  max-width: 300px;
+}
+
+.mobile-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: var(--radius-medium);
+  background: var(--neutral-95);
+  transition: all 0.3s ease;
+}
+
+.mobile-sidebar .nav-link:hover {
+  background: var(--neutral-90);
+}
+
+.mobile-sidebar .nav-link.active {
+  background: var(--primary-100);
+  color: var(--neutral-100);
+}
+
+.mobile-sidebar .material-symbols-rounded {
+  margin-right: 10px;
+}
+
+/*-----------------------------------*\
+#RESPONSIVE ADJUSTMENTS
+\*-----------------------------------*/
+
+@media (max-width: 991px) {
+  /* 隐藏桌面侧边栏 */
+  .sidebar {
+      display: none;
+  }
+  
+  /* 显示移动侧边栏当菜单激活时 */
+  .navbar.active .mobile-sidebar {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+  }
+  
+  /* 调整布局 */
+  body {
+      grid-template-columns: 1fr;
+  }
+  
+  .main-content {
+      grid-column: 1;
+  }
+  
+  .header {
+      grid-column: 1;
+  }
+  
+  /* 调整搜索栏 */
+  .search-wrapper {
+      min-width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  /* 隐藏移动侧边栏 */
+  .mobile-sidebar {
+      display: none !important;
+  }
+  
+  /* 显示桌面侧边栏 */
+  .sidebar {
+      display: block;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      width: 175px;
+      height: calc(100vh - 72px);
+      background: var(--neutral-100);
+      border-right: 1px solid var(--neutral-90);
+      z-index: 3;
+      overflow-y: auto;
+  }
+  
+  /* 恢复原始布局 */
+  body {
+      grid-template-columns: 175px 1fr;
+  }
+  
+  .main-content {
+      grid-column: 2;
+  }
+  
+  .header {
+      grid-column: 2;
+  }
+}
+
+/* 动画效果 */
+@keyframes slideDown {
+  from {
+      transform: translateY(-20px);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
