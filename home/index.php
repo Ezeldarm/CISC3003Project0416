@@ -51,7 +51,7 @@ session_start();
                                     Choose a city as your destination and get started with your travel.
                                 </p>
                             </div>
-                            <a href="cities.html" class="btn btn-outline">
+                            <a href="cities.php" class="btn btn-outline">
                                 <span class="label-medium">Explore more</span>
                                 <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
                             </a>
