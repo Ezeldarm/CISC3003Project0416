@@ -197,7 +197,7 @@ $favorites = [
                             <div>
                                 <h2 class="section-title headline-small">My favorite city</h2>
                                 <p class="section-text body-large">
-                                    這裡是您收藏的旅遊目的地，隨時規劃您的下一次冒險！
+                                Here are your favorite travel destinations to plan your next adventure!
                                 </p>
                             </div>
                         </div>
