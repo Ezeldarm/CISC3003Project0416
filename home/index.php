@@ -32,12 +32,12 @@ session_start();
                             <p class="body-large hero-text">
                                 Your Starter Pack Essentials — from custom tips to community insights.
                             </p>
-                            <form action="./" method="get" class="search-bar">
+                            <div class="search-bar">
                                 <div class="title-large card-text">Swipe like a game.<br> Get smart travel tips made just for you.</div>   
-                                <button type="submit" class="search-btn">
-                                    <span class="label-medium">Let's Go!</span>
-                                </button>
-                            </form>
+                                    <button type="submit" class="search-btn" onclick="window.location.href='swipe_cards.html'">
+                                        <span class="label-medium">Let's Go!</span>
+                                    </button>
+                            </div>
                         </div>
                         <img src="./assets/images/hero.jpg" width="1240" height="840" class="bg-pattern" alt="bg">
                     </div>
