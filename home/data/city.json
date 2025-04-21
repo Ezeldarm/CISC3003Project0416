@@ -55,7 +55,7 @@
       "food": {"score": 4.4, "description": "美食评分"},
       "clothing": {"score": 4.2, "description": "购物评分"},
       "accommodation": {"score": 4.0, "description": "住宿评分"},
-      "transport": {"score": 4.6, "description": "交通评分"}
+      "transport": {"score": 4.7, "description": "交通评分"}
     }
   }
 }
