@@ -2,11 +2,13 @@ class Card {
     constructor({
         imageUrl,
         onDismiss,
+        questionText,
         onLike,
         onDislike
     }) {
         this.imageUrl = imageUrl;
         this.onDismiss = onDismiss;
+        this.questionText = questionText;
         this.onLike = onLike;
         this.onDislike = onDislike;
         this.#init();
@@ -21,9 +23,15 @@ class Card {
     #init = () => {
         const card = document.createElement('div');
         card.classList.add('card');
+
         const img = document.createElement('img');
         img.src = this.imageUrl;
-        card.append(img);
+
+        const question = document.createElement('div');
+        question.classList.add('question');
+        question.innerText = this.questionText;
+
+        card.append(img, question);
         this.element = card;
         this.#listenToMouseEvents();
     }
@@ -80,6 +88,7 @@ class Card {
         this.element.style.transition = 'transform 1s';
         this.element.style.transform = `translate(${direction * window.innerWidth}px, ${this.#offsetY}px) rotate(${90 * direction}deg)`;
         this.element.classList.add('dismissing');
+        this.element.style.pointerEvents = 'none';
         setTimeout(() => {
             this.element.remove();
         }, 1000);
