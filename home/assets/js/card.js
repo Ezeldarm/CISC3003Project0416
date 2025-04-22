@@ -1,14 +1,14 @@
 class Card {
     constructor({
         imageUrl,
+        question,
         onDismiss,
-        questionText,
         onLike,
         onDislike
     }) {
         this.imageUrl = imageUrl;
+        this.question = question;
         this.onDismiss = onDismiss;
-        this.questionText = questionText;
         this.onLike = onLike;
         this.onDislike = onDislike;
         this.#init();
@@ -23,15 +23,15 @@ class Card {
     #init = () => {
         const card = document.createElement('div');
         card.classList.add('card');
-
         const img = document.createElement('img');
         img.src = this.imageUrl;
-
-        const question = document.createElement('div');
-        question.classList.add('question');
-        question.innerText = this.questionText;
-
-        card.append(img, question);
+        img.alt = '';
+        img.draggable = false;
+        card.append(img);
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        questionDiv.textContent = this.question;
+        card.append(questionDiv);
         this.element = card;
         this.#listenToMouseEvents();
     }
@@ -39,9 +39,9 @@ class Card {
     #listenToMouseEvents = () => {
         // mousedown
         this.element.addEventListener('mousedown', (e) => {
+            e.preventDefault();
             const { clientX, clientY } = e;
-            this.#startPoint = {x: clientX, y: clientY};
-            //no transition while moving
+            this.#startPoint = { x: clientX, y: clientY };
             this.element.style.transition = '';
             document.addEventListener('mousemove', this.#handleMouseMove);
         });
@@ -75,7 +75,6 @@ class Card {
     #handleMouseUp = (e) => {
         this.#startPoint = null;
         document.removeEventListener('mousemove', this.#handleMouseMove);
-        // transition when move back
         this.element.style.transition = 'transform 0.5s';
         this.element.style.transform = '';
     }
@@ -88,7 +87,6 @@ class Card {
         this.element.style.transition = 'transform 1s';
         this.element.style.transform = `translate(${direction * window.innerWidth}px, ${this.#offsetY}px) rotate(${90 * direction}deg)`;
         this.element.classList.add('dismissing');
-        this.element.style.pointerEvents = 'none';
         setTimeout(() => {
             this.element.remove();
         }, 1000);

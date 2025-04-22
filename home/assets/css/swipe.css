@@ -11,7 +11,7 @@ body {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background: linear-gradient(0deg, #ff6036, #fd267a);
+    background: linear-gradient(0deg, #ff5436, #401764);
 }
 
 #swiper {
@@ -30,7 +30,8 @@ body {
     border-radius: 20px;
     overflow: hidden;
     transform: translateZ(calc(-30px * var(--i))) 
-        translateY(calc(-20px * var(--i))) rotate(calc(-4deg * var(--i)));
+        translateY(calc(-20px * var(--i))) 
+        rotate(calc(-4deg * var(--i)));
     filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5));
     cursor: pointer;
     user-select: none;
@@ -56,7 +57,6 @@ body {
     animation-duration: 1s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: both;
-    /* don't run animation at the beginning */
     animation-play-state: paused;
 }
 

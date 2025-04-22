@@ -8,12 +8,31 @@
     <link rel="stylesheet" href="./assets/css/swipe.css">
 </head>
 
-
 <body>
-
     <ion-icon id="dislike" name="heart-dislike-circle-outline"></ion-icon>
 
-    <div id="swiper"></div>
+    <div id="swiper">
+        <div class="card" style="--i: 4;">
+            <img src="https://picsum.photos/id/1/1000/1000" alt="" draggable="false">
+            <div class="question">What is your favorite destination?</div>
+        </div>
+        <div class="card" style="--i: 3;">
+            <img src="https://picsum.photos/id/2/1000/1000" alt="" draggable="false">
+            <div class="question">Do you enjoy local cuisine?</div>
+        </div>
+        <div class="card" style="--i: 2;">
+            <img src="https://picsum.photos/id/3/1000/1000" alt="" draggable="false">
+            <div class="question">Which city would you visit first?</div>
+        </div>
+        <div class="card" style="--i: 1;">
+            <img src="https://picsum.photos/id/4/1000/1000" alt="" draggable="false">
+            <div class="question">Are you ready for an adventure?</div>
+        </div>
+        <div class="card" style="--i: 0;">
+            <img src="https://picsum.photos/id/5/1000/1000" alt="" draggable="false">
+            <div class="question">What's your travel style?</div>
+        </div>
+    </div>
 
     <ion-icon id="like" name="heart-circle-outline"></ion-icon>
 
@@ -21,6 +40,6 @@
     <script src="./assets/js/swipe-cards.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
 </body>
+
 </html>
