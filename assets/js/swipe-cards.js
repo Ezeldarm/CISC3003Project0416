@@ -11,11 +11,11 @@ const urls = [
 ];
 
 const questions = [
-    'What is your favorite destination?',
-    'Do you enjoy local cuisine?',
-    'Which city would you visit first?',
+    'Do you like natural landscape?',
+    'Would you try the local cuisine?',
+    'Do you like shopping?',
     'Are you ready for an adventure?',
-    'What\'s your travel style?',
+    'Are you interested in Chinese traditional instruments?',
 ];
 
 let cardCount = 0;
