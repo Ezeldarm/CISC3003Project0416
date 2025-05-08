@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'cities_data.php'; // 包含城市数据
 ?>
 
 <!DOCTYPE html>
@@ -110,127 +111,26 @@ session_start();
                             </div>
                         </div>
                         <div class="property-list">
+                            <?php foreach ($citiesData as $city): ?>
                             <div class="card">
                                 <div class="card-banner">
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-1.jpg" width="585" height="390" alt="COVA Home Realty" class="img-cover">
+                                        <img src="<?php echo htmlspecialchars($city['image']); ?>" width="585" height="390" alt="<?php echo htmlspecialchars($city['title']); ?>" class="img-cover">
                                     </figure>
-                                    <span class="badge label-medium">New</span>
-                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Hong Kong">
+                                    <?php if (!empty($city['badge'])): ?>
+                                        <span class="badge label-medium"><?php echo htmlspecialchars($city['badge']); ?></span>
+                                    <?php endif; ?>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="<?php echo htmlspecialchars($city['name']); ?>">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
                                 <div class="card-content">
-                                    <span class="title-large">Hong Kong</span>
-                                    <h3><a href="#" class="title-small card-title">Hong Kong SAR</a></h3>
-                                    <address class="body-medium card-text">Disneyland, Victoria Peak, Ocean Park...</address>
+                                    <span class="title-large"><?php echo htmlspecialchars($city['name']); ?></span>
+                                    <h3><a href="#" class="title-small card-title"><?php echo htmlspecialchars($city['title']); ?></a></h3>
+                                    <address class="body-medium card-text"><?php echo htmlspecialchars($city['description']); ?></address>
                                 </div>
                             </div>
-                            <div class="card">
-                                <div class="card-banner">
-                                    <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-2.jpg" width="585" height="390" alt="Exit Realty" class="img-cover">
-                                    </figure>
-                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Macao">
-                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-                                    </button>
-                                </div>
-                                <div class="card-content">
-                                    <span class="title-large">Macao</span>
-                                    <h3><a href="#" class="title-small card-title">Macao SAR</a></h3>
-                                    <address class="body-medium card-text">Ruins of St. Paul's, Grand Lisboa...</address>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-banner">
-                                    <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-3.jpg" width="585" height="390" alt="The Real Estate Group" class="img-cover">
-                                    </figure>
-                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Shanghai">
-                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-                                    </button>
-                                </div>
-                                <div class="card-content">
-                                    <span class="title-large">Shanghai</span>
-                                    <h3><a href="#" class="title-small card-title">Shanghai, China</a></h3>
-                                    <address class="body-medium card-text">The Bund, Oriental Pearl Tower, Yu Garden...</address>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-banner">
-                                    <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-4.jpg" width="585" height="390" alt="757 Realty" class="img-cover">
-                                    </figure>
-                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Beijing">
-                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-                                    </button>
-                                </div>
-                                <div class="card-content">
-                                    <span class="title-large">Beijing</span>
-                                    <h3><a href="#" class="title-small card-title">Beijing, China</a></h3>
-                                    <address class="body-medium card-text">Great Wall, Forbidden City, Tiananmen Square...</address>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-banner">
-                                    <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-5.jpg" width="585" height="390" alt="Beach Pros Realty Inc." class="img-cover">
-                                    </figure>
-                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Lijiang">
-                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-                                    </button>
-                                </div>
-                                <div class="card-content">
-                                    <span class="title-large">Lijiang</span>
-                                    <h3><a href="#" class="title-small card-title">Yunnan, China</a></h3>
-                                    <address class="body-medium card-text">Jade Dragon Snow Mountain, Old Town of Lijiang, Lugu Lake...</address>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-banner">
-                                    <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-6.jpg" width="585" height="390" alt="Keller Williams Elite Town Center" class="img-cover">
-                                    </figure>
-                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Chengdu">
-                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-                                    </button>
-                                </div>
-                                <div class="card-content">
-                                    <span class="title-large">Chengdu</span>
-                                    <h3><a href="#" class="title-small card-title">Sichuan, China</a></h3>
-                                    <address class="body-medium card-text">Hot Pot, Pandas, Leshan Buddha...</address>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-banner">
-                                    <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-7.jpg" width="585" height="390" alt="All Pros Real Estate" class="img-cover">
-                                    </figure>
-                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Guangzhou">
-                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-                                    </button>
-                                </div>
-                                <div class="card-content">
-                                    <span class="title-large">Guangzhou</span>
-                                    <h3><a href="#" class="title-small card-title">Guangdong, China</a></h3>
-                                    <address class="body-medium card-text">Yum Cha, Canton Tower, Chimelong Safari Park, Shamian Island...</address>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-banner">
-                                    <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-8.jpg" width="585" height="390" alt="FIT Realty" class="img-cover">
-                                    </figure>
-                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Harbin">
-                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-                                    </button>
-                                </div>
-                                <div class="card-content">
-                                    <span class="title-large">Harbin</span>
-                                    <h3><a href="#" class="title-small card-title">Heilongjiang, China</a></h3>
-                                    <address class="body-medium card-text">Harbin Ice and Snow World, Zhongyang Pedestrain Street...</address>
-                                </div>
-                            </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </section>

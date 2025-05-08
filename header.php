@@ -1,5 +1,3 @@
-
-
 <header class="header" data-header>
     <div class="container">
         <a href="#" class="logo">
@@ -13,11 +11,11 @@
             
                 <div class="topnav">
                     <div class="search-container">
-                        <form action="">
+                        <form action="cities_search.php" method="GET">
                             <div class="search-wrapper">
-                                <input type="text" placeholder="Search..." name="search">
+                                <input type="text" placeholder="Search city..." name="query">
                                 <button type="submit" class="search-btn" aria-label="Search">
-                                    <img src="./assets/images/magnifying-glass.png" alt="搜尋" class="search-icon">
+                                    <img src="./assets/images/magnifying-glass.png" alt="Search" class="search-icon">
                                 </button>
                             </div>
                         </form>
