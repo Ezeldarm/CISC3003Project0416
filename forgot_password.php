@@ -35,18 +35,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             try {
                                 $mail->isSMTP();
                                 
-                                $mail->Host = 'smtp-mail.outlook.com';
+                                $mail->Host = 'smtp.163.com'; // 163 郵箱 SMTP 主機
                                 $mail->SMTPAuth = true;
-                                $mail->Username = 'xxx@outlook.com'; // 填你的 Outlook 郵箱
-                                $mail->Password = 'xxx'; // 填你的 Outlook 密碼或應用程式密碼
-                                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                                $mail->Port = 587;
+                                $mail->Username = 'cowmeat1122@163.com'; // 填你的 163 郵箱
+                                $mail->Password = 'BTiWT354sUVpzeH5'; // 填你的 163 客戶端授權碼
+                                $mail->SMTPSecure = 'ssl'; // 使用 SSL
+                                $mail->Port = 465; // 推薦使用 465 端口
 
-                                $mail->setFrom('xxx@outlook.com', 'China Travel Starter Pack');
-                                
+                                $mail->setFrom('cowmeat1122@163.com', 'China Travel Starter Pack');
                                 $mail->addAddress($email);
                                 $mail->Subject = '密碼重置請求 - China Travel Starter Pack';
-                                $reset_link = "http://" . $_SERVER['HTTP_HOST'] . "/reset_password.php?token=" . $reset_token;
+                                $reset_link = "http://" . $_SERVER['HTTP_HOST'] . "/cisc3003-dc326264/CISC3003Project0416/reset_password.php?token=" . $reset_token;
                                 $mail->Body = "您好,\n\n請點擊以下連結重置您的密碼：\n" . $reset_link . "\n\n此連結將在1小時後失效。\n\n謝謝,\nChina Travel Starter Pack 團隊";
                                 $mail->AltBody = "請複製以下連結到瀏覽器重置密碼：$reset_link";
 
