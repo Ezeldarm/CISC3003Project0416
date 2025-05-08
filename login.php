@@ -29,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录 - CityLife指南</title>
+    <title>Login</title>
     <style>
         * {
             margin: 0;
@@ -48,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         }
         
         header {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            background: var(--primary-40);
             color: white;
             padding: 1rem 2rem;
             display: flex;
@@ -98,8 +98,9 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             text-align: center;
+            font-size: 16px;
         }
 
         .login-form h2 {
@@ -131,10 +132,10 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
 
         .form-group input {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 1rem 1.2rem;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             transition: border-color 0.3s;
         }
 
@@ -203,18 +204,69 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
             }
         }
     </style>
+    <style>
+        .login-container {
+            margin-top: 80px;
+        }
+        .register-btn {
+            font-size: 1.4rem;
+            padding: 0rem 1rem;
+        }
+    </style>
+    <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- 
+    - google icon link
+  -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/login-style.css">
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="logo"><a href="index.php">CityLife指南</a></div>
-        <div class="auth-buttons">
-            <button class="btn register-btn" onclick="location.href='register.html'">注册</button>
+    <header class="header" data-header>
+    <div class="container">
+
+      <a href="index.php" class="logo">
+        China Travel<br>
+        Starter Pack
+      </a>
+
+      <div class="auth-buttons">
+            <button class="btn login-btn" onclick="location.href='register.php'">Register</button>
         </div>
-    </header>
+
+      <!-- <nav class="navbar" data-navbar>
+        <div class="navbar-wrapper" style="margin-left: auto;">
+            <button class="btn register-btn btn-fill label-medium" onclick="location.href='register.html'">Register</button>
+        </div>
+
+      </nav> -->
+
+      <!-- <button class="nav-toggle-btn icon-btn" aria-label="toggle navbar" data-nav-toggler>
+        <span class="material-symbols-rounded open" aria-hidden="true">menu</span>
+
+        <span class="material-symbols-rounded close" aria-hidden="true">close</span>
+      </button> -->
+
+    </div>
+  </header>
 
     <div class="login-container">
         <form action="login.php" method="post" class="login-form">
-            <h2>用戶登入</h2>
+            <h2>Login</h2>
             <?php if (!empty($error_message) && trim($error_message) !== ''): ?>
             <div class="error-message">
                 <?php echo htmlspecialchars($error_message); ?>
@@ -222,26 +274,35 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
             <?php endif; ?>
             
             <div class="form-group">
-                <label for="login_identifier">用户名或邮箱</label>
-                <input type="text" id="login_identifier" name="login_identifier" placeholder="请输入用户名或邮箱" required>
+                <label for="login_identifier">Account</label>
+                <input type="text" id="login_identifier" name="login_identifier" placeholder="Input username or email" required>
             </div>
 
             <div class="form-group">
-                <label for="password">密码</label>
-                <input type="password" id="password" name="password" placeholder="请输入密码" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Input password" required>
             </div>
 
-            <button type="submit" class="submit-btn">登录</button>
+            <button type="submit" class="submit-btn">Login</button>
 
             <div class="extra-links">
-                <a href="forgot_password.html">忘记密码？</a>
-                <a href="register.html">注册新账号</a>
+                <a href="forgot_password.html">Forget password?</a>
+                <a href="register.html">Register new account</a>
             </div>
         </form>
     </div>
 
     <footer>
-        <p>&copy; 2024 CityLife指南. All rights reserved.</p>
+        <!-- <p>&copy; 2024 CityLife指南. All rights reserved.</p> -->
+        <div class="footer-bottom">
+            <div class="container">
+    
+            <p class="copyright body-medium">
+                &copy; 2025 WebMaster Partners. All rights reserved. <br> CISC3003 Web Programming - 2025: Pair 12 DC328536 ZHONG YUZHANG | DC326958 XIE YI | Pair 10 DC326264 CHEANG NGOU HIN | DC325022 PAN YANGSHEN
+            </p>
+    
+            </div>
+        </div>
     </footer>
 </body>
 </html><?php

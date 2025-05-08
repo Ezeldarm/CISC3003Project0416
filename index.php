@@ -1,347 +1,379 @@
 <?php
-// 检查用户是否已登录
 session_start();
 ?>
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>城市生活指南 - 发现本地生活</title>
-    <style>
-        /* 全局样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        /* 头部样式 */
-        header {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        
-        .auth-buttons .btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            margin-left: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .auth-buttons .btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        /* 搜索区域 */
-        .search-hero {
-            background: url('https://images.unsplash.com/photo-1508804185872-d7badad00f7d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
-            background-size: cover;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        
-        .search-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-        }
-        
-        .search-container {
-            position: relative;
-            width: 60%;
-            max-width: 800px;
-            z-index: 1;
-        }
-        
-        .search-container h2 {
-            color: white;
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 2rem;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-        
-        .search-bar {
-            display: flex;
-        }
-        
-        .search-bar input {
-            flex: 1;
-            padding: 1rem;
-            border: none;
-            border-radius: 30px 0 0 30px;
-            font-size: 1rem;
-            outline: none;
-        }
-        
-        .search-bar button {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 0 1.5rem;
-            border-radius: 0 30px 30px 0;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s;
-        }
-        
-        .search-bar button:hover {
-            background: #ff5252;
-        }
-        
-        /* 城市板块 */
-        .cities-section {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #444;
-        }
-        
-        .cities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        .city-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-        
-        .city-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .city-card img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-        }
-        
-        .city-info {
-            padding: 1.2rem;
-        }
-        
-        .city-info h3 {
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-        
-        .city-info p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        /* 分类导航 */
-        .categories {
-            background: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .categories h3 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #555;
-        }
-        
-        .category-tags {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .tag {
-            background: #f0f4f8;
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: #4a6b8b;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .tag:hover {
-            background: #e0e8f0;
-            color: #3a5a78;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .search-container {
-                width: 90%;
-            }
-            
-            .cities-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-        }
-        
-        @media (max-width: 480px) {
-            header {
-                flex-direction: column;
-                padding: 1rem;
-            }
-            
-            .logo {
-                margin-bottom: 1rem;
-            }
-            
-            .search-hero {
-                height: 250px;
-            }
-            
-            .search-container h2 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <title>China Travel Starter Pack</title>
+    <meta name="title" content="China Travel Starter Pack">
+    <meta name="description" content="This is a realestate website devloped by Group 02">
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="./assets/js/script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <header>
-        <div class="logo">CityLife Guide</div>
-        <div class="auth-buttons">
-            <?php 
-            //session_start(); // Start the session at the beginning
-            if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                <span style="margin-right: 1rem; color: white;">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
-                <button class="btn logout-btn" onclick="location.href='logout.php'">Exit</button>
-            <?php else: ?>
-                <button class="btn login-btn" onclick="location.href='login.php'">Login</button>
-                <button class="btn register-btn" onclick="location.href='register.html'">Register</button>
-            <?php endif; ?>
-        </div>
-    </header>
-    
-    <div class="search-hero">
-        <div class="search-container">
-            <h2>Discover the city life that suits you best</h2>
-            <div class="search-bar">
-                <input type="text" placeholder="Search for a city, region or keyword...">
-                <button>Search</button>
-            </div>
-        </div>
-    </div>
-    
-    <section class="cities-section">
-        <h2 class="section-title">热门城市指南</h2>
-        <div class="cities-grid">
-            <!-- 上海 -->
-            <div class="city-card" onclick="location.href='city.php?city=shanghai'">
-                <img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="上海">
-                <div class="city-info">
-                    <h3>Shanghai</h3>
-                    <p>A guide to living in a cosmopolitan city</p>
-                </div>
-            </div>
-            
-            <!-- 北京 -->
-            <div class="city-card" onclick="location.href='city.php?city=beijing'">
-                <img src="https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="北京">
-                <div class="city-info">
-                    <h3>Beijing</h3>
-                    <p>Fusion of ancient capital culture with modern life</p>
-                </div>
-            </div>
-            
-            <!-- 深圳 -->
-            <div class="city-card" onclick="location.href='city.php?city=shenzhen'">
-                <img src="https://images.unsplash.com/photo-1609515602287-8470b8d9ac11?q=80&w=3269&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="深圳">
-                <div class="city-info">
-                    <h3>Shenzhen</h3>
-                    <p>Survival Manual for Tech City</p>
-                </div>
-            </div>
-            
-            <!-- 广州 -->
-            <div class="city-card" onclick="location.href='city.php?city=guangzhou'">
-                <img src="https://images.unsplash.com/photo-1649147857403-ea32b99fc0b8?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Guangzhou">
-                <div class="city-info">
-                    <h3>Guangzhou</h3>
-                    <p>Lingnan Culture and Gourmet Paradise</p>
-                </div>
-            </div>
-            
-            <!-- Chengdu -->
-            <div class="city-card" onclick="location.href='city.php?city=chengdu'">
-                <img src="https://images.unsplash.com/photo-1626881465360-68d368877e38?q=80&w=3269&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chengdu">
-                <div class="city-info">
-                    <h3>Chengdu</h3>
-                    <p>A Guide to Slow Living in Bashir</p>
-                </div>
-            </div>
-            
-            <!-- Chongqing -->
-            <div class="city-card" onclick="location.href='city.php?city=chongqing'">
-                <img src="https://images.unsplash.com/photo-1581252167648-643051a9433e?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chongqing">
-                <div class="city-info">
-                    <h3>Chongqing</h3>
-                    <p>Magical living guide in mountain city</p>
-                </div>
-            </div>
-            
-            <!-- HongKong -->
-            <div class="city-card" onclick="location.href='city.php?city=hongkong'">
-                <img src="https://images.unsplash.com/photo-1619187269972-267d2b78a423?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="HongKong">
-                <div class="city-info">
-                    <h3>Hong Kong</h3>
-                    <p>The past and the future of port cities</p>
-                </div>
-            </div>
+    <?php include 'header.php'; ?>
+    <?php include 'sidebar.php'; ?>
+    <div class="main-content">
+        <main>
+            <div>
+                <section class="hero">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h2 class="headline-large hero-title">Travel China Like a Pro.</h2>
+                            <p class="body-large hero-text">
+                                Your Starter Pack Essentials — from custom tips to community insights.
+                            </p>
+                            <div class="search-bar">
+                                <div class="title-large card-text">Swipe like a game.<br> Get smart travel tips made just for you.</div>   
+                                    <button type="submit" class="search-btn" onclick="window.location.href='swipe_cards.html'">
+                                        <span class="label-medium">Let's Go!</span>
+                                    </button>
+                            </div>
+                        </div>
+                        <img src="./assets/images/hero.jpg" width="1240" height="840" class="bg-pattern" alt="bg">
+                    </div>
+                </section>
+                <section class="section property">
+                    <div class="container">
+                        <div class="title-wrapper">
+                            <div>
+                                <h2 class="section-title headline-small">You Journey starts in...</h2>
+                                <p class="section-text body-large">
+                                    Choose a city as your destination and get started with your travel.
+                                </p>
+                            </div>
+                            <a href="cities.php" class="btn btn-outline">
+                                <span class="label-medium">Explore more</span>
+                                <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
+                            </a>
+                        </div>
+                        <div class="property-list">
+                            <div class="card">
+                                <div class="card-banner">
+                                    <figure class="img-holder" style="--width: 585; --height: 390;">
+                                        <img src="./assets/images/property-1.jpg" width="585" height="390" alt="COVA Home Realty" class="img-cover">
+                                    </figure>
+                                    <span class="badge label-medium">New</span>
+                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
+                                    </button>
+                                </div>
+                                <div class="card-content">
+                                    <span class="title-large">Hong Kong</span>
+                                    <h3><a href="#" class="title-small card-title">Hong Kong SAR</a></h3>
+                                    <address class="body-medium card-text">Disneyland, Victoria Peak, Ocean Park...</address>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-banner">
+                                    <figure class="img-holder" style="--width: 585; --height: 390;">
+                                        <img src="./assets/images/property-2.jpg" width="585" height="390" alt="Exit Realty" class="img-cover">
+                                    </figure>
+                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
+                                    </button>
+                                </div>
+                                <div class="card-content">
+                                    <span class="title-large">Macao</span>
+                                    <h3><a href="#" class="title-small card-title">Macao SAR</a></h3>
+                                    <address class="body-medium card-text">Ruins of St. Paul's, Grand Lisboa...</address>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-banner">
+                                    <figure class="img-holder" style="--width: 585; --height: 390;">
+                                        <img src="./assets/images/property-3.jpg" width="585" height="390" alt="The Real Estate Group" class="img-cover">
+                                    </figure>
+                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
+                                    </button>
+                                </div>
+                                <div class="card-content">
+                                    <span class="title-large">Shanghai</span>
+                                    <h3><a href="#" class="title-small card-title">Shanghai, China</a></h3>
+                                    <address class="body-medium card-text">The Bund, Oriental Pearl Tower, Yu Garden...</address>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-banner">
+                                    <figure class="img-holder" style="--width: 585; --height: 390;">
+                                        <img src="./assets/images/property-4.jpg" width="585" height="390" alt="757 Realty" class="img-cover">
+                                    </figure>
+                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
+                                    </button>
+                                </div>
+                                <div class="card-content">
+                                    <span class="title-large">Beijing</span>
+                                    <h3><a href="#" class="title-small card-title">Beijing, China</a></h3>
+                                    <address class="body-medium card-text">Great Wall, Forbidden City, Tiananmen Square...</address>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section feature" aria-labelledby="feature-label">
+                    <div class="container">
+                        <figure class="feature-banner">
+                            <img src="./assets/images/feature-banner-1.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">
+                        </figure>
+                        <div class="feature-content">
+                            <p class="title-small feature-text">Article</p>
+                            <h2 class="headline-large" id="feature-label">China Travel 101: Essential Prep Before You Go</h2>
+                            <p class="body-large feature-text">
+                                Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here’s your must-know checklist to avoid surprises and travel like a savvy explorer.
+                            </p>
+                            <ul class="feature-list">
+                                <li class="feautre-item">
+                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                    <span class="body-medium">Cash & Payments</span>
+                                </li>
+                                <li class="feautre-item">
+                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                    <span class="body-medium"> Must-Have Apps</span>
+                                </li>
+                                <li class="feautre-item">
+                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                    <span class="body-medium">Internet & SIM Cards</span>
+                                </li>
+                                <li class="feautre-item">
+                                    <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
+                                    <span class="body-medium">Cultural Prep</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
 
-            <!-- Macau -->
-            <div class="city-card" onclick="location.href='city.php?city=macau'">
-                <img src="https://images.unsplash.com/photo-1555331446-0ff637678740?q=80&w=2765&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Macau">
-                <div class="city-info">
-                    <h3>Macau</h3>
-                    <p>Lost in Casino Paradise</p >
-                </div>
+                <section class="section forum" aria-labelledby="forum-label">
+                    <div class="container">
+                        <div class="title-wrapper">
+                            <div>
+                                <p class="section-subtitle title-medium">Community Insights</p>
+                                <h2 class="section-title headline-medium" id="forum-label">Travel Stories & Tips from China Explorers</h2>
+                                <p class="section-text body-large">
+                                    Join our community of travelers sharing their adventures, itineraries, and insider tips for exploring China.
+                                </p>
+                            </div>
+                            <a href="#" class="btn btn-outline">
+                                <span class="label-medium">View All Posts</span>
+                                <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
+                            </a>
+                        </div>
+                        <ul class="forum-list">
+                            <li class="forum-post">
+                                <div class="post-header">
+                                    <figure class="post-avatar">
+                                        <img src="./assets/images/avatar-1.jpg" width="56" height="56" loading="lazy" alt="Emma_TravelBug" class="img-cover">
+                                    </figure>
+                                    <div class="post-meta">
+                                        <h3 class="title-small">Emma_TravelBug</h3>
+                                        <time class="body-medium" datetime="2025-04-15">April 15, 2025</time>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <h4 class="title-medium post-title">
+                                        <a href="#">My Whirlwind Week in Beijing & Shanghai</a>
+                                    </h4>
+                                    <p class="body-large post-text">
+                                        Just got back from an incredible 7-day trip to China! Started in Beijing with the Great Wall at Mutianyu—absolutely breathtaking, though the climb was no joke. Then explored the Forbidden City and indulged in Peking duck at Da Dong. Took the high-speed train to Shanghai, where The Bund at night is pure magic... 
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="forum-post">
+                                <div class="post-header">
+                                    <figure class="post-avatar">
+                                        <img src="./assets/images/avatar-2.jpg" width="56" height="56" loading="lazy" alt="Luca_Wanderer" class="img-cover">
+                                    </figure>
+                                    <div class="post-meta">
+                                        <h3 class="title-small">Luca_Wanderer</h3>
+                                        <time class="body-medium" datetime="2025-04-10">April 10, 2025</time>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <h4 class="title-medium post-title">
+                                        <a href="#">Navigating Hong Kong Like a Local</a>
+                                    </h4>
+                                    <p class="body-large post-text">
+                                        Hong Kong was a blast! Spent my first day hiking Dragon’s Back—stunning views and not too crowded. Then hit the street markets in Mong Kok for some bargain souvenirs and the best dim sum at Tim Ho Wan. Pro tip: get a local SIM card at 7-Eleven for cheap data... 
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="forum-post">
+                                <div class="post-header">
+                                    <figure class="post-avatar">
+                                        <img src="./assets/images/avatar-3.jpg" width="56" height="56" loading="lazy" alt="Sophie_Adventures" class="img-cover">
+                                    </figure>
+                                    <div class="post-meta">
+                                        <h3 class="title-small">Sophie_Adventures</h3>
+                                        <time class="body-medium" datetime="2025-04-05">April 5, 2025</time>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <h4 class="title-medium post-title">
+                                        <a href="#">Chasing History in Xi’an</a>
+                                    </h4>
+                                    <p class="body-large post-text">
+                                        Xi’an stole my heart! The Terracotta Warriors were mind-blowing—definitely worth the hype. Cycled around the ancient city wall for a unique perspective, and the Muslim Quarter’s food stalls were a highlight (lamb skewers, anyone?). Highly recommend downloading DiDi for easy rides... 
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--<section class="section story">
+                    <div class="container">
+                        <div class="title-wrapper">
+                            <div>
+                                <p class="section-subtitle title-medium">Our Customers</p>
+                                <h2 class="section-title headline-medium">We Help 1000+ Family Find Their True Home</h2>
+                                <ul class="avatar-list">
+                                    <li class="avatar">
+                                        <img src="./assets/images/avatar-1.jpg" width="120" height="80" loading="lazy" alt="John smith" class="img-cover">
+                                    </li>
+                                    <li class="avatar">
+                                        <img src="./assets/images/avatar-2.jpg" width="120" height="80" loading="lazy" alt="Jane smith" class="img-cover">
+                                    </li>
+                                    <li class="avatar">
+                                        <img src="./assets/images/avatar-3.jpg" width="120" height="80" loading="lazy" alt="John smith" class="img-cover">
+                                    </li>
+                                    <li class="avatar">
+                                        <img src="./assets/images/avatar-4.jpg" width="120" height="80" loading="lazy" alt="Jane smith" class="img-cover">
+                                        <div class="overlay-content">
+                                            <span class="label-medium">99+</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn btn-outline">
+                                <span class="label-medium">View All Stories</span>
+                                <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
+                            </a>
+                        </div>
+                        <ul class="story-list">
+                            <li class="story-card" style="background-image: url('./assets/images/story-1.jpg')">
+                                <a href="#" class="overlay-content">
+                                    <div>
+                                        <h3 class="title-small">Chris Traeger</h3>
+                                        <div class="rating-wrapper">
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <data class="title-small rating-text" value="5">5.0</data>
+                                        </div>
+                                    </div>
+                                    <figure class="card-avatar">
+                                        <img src="./assets/images/story-avatar-1.jpg" width="56" height="56" loading="lazy" alt="Chris Traeger" class="img-cover">
+                                    </figure>
+                                </a>
+                            </li>
+                            <li class="story-card" style="background-image: url('./assets/images/story-2.jpg')">
+                                <a href="#" class="overlay-content">
+                                    <div>
+                                        <h3 class="title-small">Duke Silver</h3>
+                                        <div class="rating-wrapper">
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <data class="title-small rating-text" value="5">5.0</data>
+                                        </div>
+                                    </div>
+                                    <figure class="card-avatar">
+                                        <img src="./assets/images/story-avatar-2.jpg" width="56" height="56" loading="lazy" alt="Duke Silver" class="img-cover">
+                                    </figure>
+                                </a>
+                            </li>
+                            <li class="story-card" style="background-image: url('./assets/images/story-3.jpg')">
+                                <a href="#" class="overlay-content">
+                                    <div>
+                                        <h3 class="title-small">Tsukasa Aoi</h3>
+                                        <div class="rating-wrapper">
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <data class="title-small rating-text" value="5">5.0</data>
+                                        </div>
+                                    </div>
+                                    <figure class="card-avatar">
+                                        <img src="./assets/images/story-avatar-3.jpg" width="56" height="56" loading="lazy" alt="Tsukasa Aoi" class="img-cover">
+                                    </figure>
+                                </a>
+                            </li>
+                            <li class="story-card" style="background-image: url('./assets/images/story-4.jpg')">
+                                <a href="#" class="overlay-content">
+                                    <div>
+                                        <h3 class="title-small">Freida Varnes</h3>
+                                        <div class="rating-wrapper">
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <data class="title-small rating-text" value="5">5.0</data>
+                                        </div>
+                                    </div>
+                                    <figure class="card-avatar">
+                                        <img src="./assets/images/story-avatar-4.jpg" width="56" height="56" loading="lazy" alt="Freida Varnes" class="img-cover">
+                                    </figure>
+                                </a>
+                            </li>
+                            <li class="story-card" style="background-image: url('./assets/images/story-5.jpg')">
+                                <a href="#" class="overlay-content">
+                                    <div>
+                                        <h3 class="title-small">Carl Lorthner</h3>
+                                        <div class="rating-wrapper">
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <data class="title-small rating-text" value="5">5.0</data>
+                                        </div>
+                                    </div>
+                                    <figure class="card-avatar">
+                                        <img src="./assets/images/story-avatar-5.jpg" width="56" height="56" loading="lazy" alt="Carl Lorthner" class="img-cover">
+                                    </figure>
+                                </a>
+                            </li>
+                            <li class="story-card" style="background-image: url('./assets/images/story-6.jpg')">
+                                <a href="#" class="overlay-content">
+                                    <div>
+                                        <h3 class="title-small">Marci Senter</h3>
+                                        <div class="rating-wrapper">
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <span class="material-symbols-rounded" aria-hidden="true">star</span>
+                                            <data class="title-small rating-text" value="5">5.0</data>
+                                        </div>
+                                    </div>
+                                    <figure class="card-avatar">
+                                        <img src="./assets/images/story-avatar-6.jpg" width="56" height="56" loading="lazy" alt="Marci Senter" class="img-cover">
+                                    </figure>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>-->
             </div>
-        </div>
-    </section>
+        </main>
+        <?php include 'footer.php'; ?>
+    </div>
 </body>
 </html>
