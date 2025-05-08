@@ -240,26 +240,27 @@ session_start();
                             <img src="./assets/images/feature-banner-1.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">
                         </figure>
                         <div class="feature-content">
-                            <h2 class="headline-medium" id="feature-label">We Specialize In Quality Home Renovations</h2>
+                            <p class="title-small feature-text">Article</p>
+                            <h2 class="headline-large" id="feature-label">China Travel 101: Essential Prep Before You Go</h2>
                             <p class="body-large feature-text">
-                                Looking to renovate your home to reflect your style and personality? Look no further than our team of experts who specialize in quality home renovations to transform your space into a dream home you'll love. From design to execution.
+                                Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here's your must-know checklist to avoid surprises and travel like a savvy explorer.
                             </p>
                             <ul class="feature-list">
                                 <li class="feautre-item">
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Smart Home</span>
+                                    <span class="body-medium">Cash & Payments</span>
                                 </li>
                                 <li class="feautre-item">
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Beautiful Scene Around</span>
+                                    <span class="body-medium"> Must-Have Apps</span>
                                 </li>
                                 <li class="feautre-item">
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Exceptional lifestyle</span>
+                                    <span class="body-medium">Internet & SIM Cards</span>
                                 </li>
                                 <li class="feautre-item">
                                     <span class="material-symbols-rounded feature-icon" aria-hidden="true">check_circle</span>
-                                    <span class="body-medium">Complete 24/7 Security</span>
+                                    <span class="body-medium">Cultural Prep</span>
                                 </li>
                             </ul>
                         </div>
