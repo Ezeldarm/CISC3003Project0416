@@ -28,6 +28,7 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/script.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -134,11 +135,13 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
                 <section class="section feature" aria-labelledby="feature-label">
                     <div class="container">
                         <figure class="feature-banner">
-                            <img src="./assets/images/feature-banner-1.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">
+                            <img src="./assets/images/feature-banner-1.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">       
                         </figure>
                         <div class="feature-content">
                             <p class="title-small feature-text">Article</p>
+                            <a href="article.php">
                             <h2 class="headline-large" id="feature-label">China Travel 101: Essential Prep Before You Go</h2>
+                            </a>
                             <p class="body-large feature-text">
                                 Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here's your must-know checklist to avoid surprises and travel like a savvy explorer.
                             </p>
