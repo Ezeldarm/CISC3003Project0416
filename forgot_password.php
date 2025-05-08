@@ -13,9 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST["email"]);
 
     if (empty($email)) {
-        $message = "請輸入您的電郵地址。";
+        $message = "Please enter your email address.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $message = "請輸入有效的電郵地址。";
+        $message = "Please enter a valid email address.";
     } else {
         $sql = "SELECT id FROM users WHERE email = ?";
         if ($stmt = mysqli_prepare($link, $sql)) {
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if (mysqli_stmt_num_rows($stmt) == 1) {
                     $reset_token = bin2hex(random_bytes(50));
-                    $reset_token_expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
+                    $reset_token_expiry = date('Y-m-d H:i:s', strtotime('+24 hour'));
 
                     $sql_update = "UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?";
                     if ($stmt_update = mysqli_prepare($link, $sql_update)) {
@@ -35,41 +35,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             try {
                                 $mail->isSMTP();
                                 
-                                $mail->Host = 'smtp.163.com'; // 163 郵箱 SMTP 主機
+                                $mail->Host = 'smtp.163.com'; // 163 Mail SMTP Host
                                 $mail->SMTPAuth = true;
-                                $mail->Username = 'cowmeat1122@163.com'; // 填你的 163 郵箱
-                                $mail->Password = 'BTiWT354sUVpzeH5'; // 填你的 163 客戶端授權碼
-                                $mail->SMTPSecure = 'ssl'; // 使用 SSL
-                                $mail->Port = 465; // 推薦使用 465 端口
+                                $mail->Username = 'cowmeat1122@163.com'; // Your 163 Mail
+                                $mail->Password = 'BTiWT354sUVpzeH5'; // Your 163 Mail Authorization Code
+                                $mail->SMTPSecure = 'ssl'; // Use SSL
+                                $mail->Port = 465; // Recommended port 465
 
                                 $mail->setFrom('cowmeat1122@163.com', 'China Travel Starter Pack');
                                 $mail->addAddress($email);
-                                $mail->Subject = '密碼重置請求 - China Travel Starter Pack';
+                                $mail->Subject = 'Password Reset Request - China Travel Starter Pack';
                                 $reset_link = "http://" . $_SERVER['HTTP_HOST'] . "/cisc3003-dc326264/CISC3003Project0416/reset_password.php?token=" . $reset_token;
-                                $mail->Body = "您好,\n\n請點擊以下連結重置您的密碼：\n" . $reset_link . "\n\n此連結將在1小時後失效。\n\n謝謝,\nChina Travel Starter Pack 團隊";
-                                $mail->AltBody = "請複製以下連結到瀏覽器重置密碼：$reset_link";
+                                $mail->Body = "Hello,\n\nPlease click the following link to reset your password:\n" . $reset_link . "\n\nThis link will expire in 1 hour.\n\nThank you,\nChina Travel Starter Pack Team";
+                                $mail->AltBody = "Please copy this link to your browser to reset password: $reset_link";
 
                                 $mail->send();
-                                $message = "已發送密碼重置連結到您的電郵，請檢查收件箱（包括垃圾郵件）。";
+                                $message = "Password reset link has been sent to your email. Please check your inbox (including spam folder).";
                                 $status = "success";
                             } catch (Exception $e) {
-                                $message = "發送郵件失敗，請稍後再試。錯誤：{$mail->ErrorInfo}";
+                                $message = "Failed to send email. Please try again later. Error: {$mail->ErrorInfo}";
                             }
                         } else {
-                            $message = "更新重置令牌失敗，請稍後再試。";
+                            $message = "Failed to update reset token. Please try again later.";
                         }
                         mysqli_stmt_close($stmt_update);
                     }
                 } else {
-                    $message = "已發送密碼重置連結到您的電郵，請檢查收件箱（包括垃圾郵件）。";
+                    $message = "If this email exists in our system, a password reset link has been sent. Please check your inbox (including spam folder).";
                     $status = "success";
                 }
             } else {
-                $message = "查詢電郵時出錯，請稍後再試。";
+                $message = "Error while checking email. Please try again later.";
             }
             mysqli_stmt_close($stmt);
         } else {
-            $message = "準備查詢時出錯，請稍後再試。";
+            $message = "Error preparing query. Please try again later.";
         }
     }
 
