@@ -1,28 +1,95 @@
 <?php
 session_start();
-$favorites = [
-    [
-        'id' => 1,
-        'name' => 'Hong Kong',
-        'title' => 'Hong Kong SAR',
-        'image' => './assets/images/property-1.jpg',
-        'description' => 'Disneyland, Victoria Peak, Ocean Park...'
-    ],
-    [
-        'id' => 3,
-        'name' => 'Shanghai',
-        'title' => 'Shanghai, China',
-        'image' => './assets/images/property-3.jpg',
-        'description' => 'The Bund, Oriental Pearl Tower, Yu Garden...'
-    ],
-    [
-        'id' => 4,
-        'name' => 'Beijing',
-        'title' => 'Beijing, China',
-        'image' => './assets/images/property-4.jpg',
-        'description' => 'Great Wall, Forbidden City, Tiananmen Square...'
-    ]
-];
+require_once 'db_config.php';
+
+// 检查用户是否已登录
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
+    header('Location: login.php');
+    exit;
+}
+
+// 从数据库获取用户喜欢的城市
+$favorites = [];
+try {
+    // 使用db_config.php中定义的常量
+    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT);
+    $conn->set_charset("utf8mb4");
+
+    if ($conn->connect_error) {
+        throw new Exception("连接失败: " . $conn->connect_error);
+    }
+
+    $user_id = $_SESSION['user_id'];
+    $stmt = $conn->prepare("SELECT city_name FROM favorite_cities WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // 城市信息映射
+    $city_info = [
+        'Hong Kong' => [
+            'title' => 'Hong Kong SAR',
+            'image' => './assets/images/property-1.jpg',
+            'description' => 'Disneyland, Victoria Peak, Ocean Park...'
+        ],
+        'Macao' => [
+            'title' => 'Macao SAR',
+            'image' => './assets/images/property-2.jpg',
+            'description' => 'Ruins of St. Paul\'s, Grand Lisboa...'
+        ],
+        'Shanghai' => [
+            'title' => 'Shanghai, China',
+            'image' => './assets/images/property-3.jpg',
+            'description' => 'The Bund, Oriental Pearl Tower, Yu Garden...'
+        ],
+        'Beijing' => [
+            'title' => 'Beijing, China',
+            'image' => './assets/images/property-4.jpg',
+            'description' => 'Great Wall, Forbidden City, Tiananmen Square...'
+        ],
+        'Lijiang' => [
+            'title' => 'Yunnan, China',
+            'image' => './assets/images/property-5.jpg',
+            'description' => 'Jade Dragon Snow Mountain, Old Town of Lijiang, Lugu Lake...'
+        ],
+        'Chengdu' => [
+            'title' => 'Sichuan, China',
+            'image' => './assets/images/property-6.jpg',
+            'description' => 'Hot Pot, Pandas, Leshan Buddha...'
+        ],
+        'Guangzhou' => [
+            'title' => 'Guangdong, China',
+            'image' => './assets/images/property-7.jpg',
+            'description' => 'Yum Cha, Canton Tower, Chimelong Safari Park, Shamian Island...'
+        ],
+        'Harbin' => [
+            'title' => 'Heilongjiang, China',
+            'image' => './assets/images/property-8.jpg',
+            'description' => 'Harbin Ice and Snow World, Zhongyang Pedestrain Street...'
+        ]
+    ];
+
+    while ($row = $result->fetch_assoc()) {
+        $city_name = $row['city_name'];
+        if (isset($city_info[$city_name])) {
+            $favorites[] = array_merge(
+                ['name' => $city_name],
+                $city_info[$city_name]
+            );
+        }
+    }
+
+} catch (Exception $e) {
+    error_log($e->getMessage());
+} finally {
+    if (isset($stmt)) {
+        $stmt->close();
+    }
+    if (isset($conn)) {
+        $conn->close();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +103,55 @@ $favorites = [
     <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/script.js" defer></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取所有喜欢按钮
+        const favButtons = document.querySelectorAll('.fav-btn');
+        
+        favButtons.forEach(button => {
+            button.addEventListener('click', async function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const card = this.closest('.favorite-card');
+                const cityName = card.querySelector('.title-large').textContent;
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('city_name', cityName);
+                    formData.append('action', 'remove');
+                    
+                    const response = await fetch('toggle_favorite.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    console.log('Response:', data); // 添加调试日志
+                    
+                    if (data.success) {
+                        // 移除卡片
+                        card.remove();
+                        
+                        // 如果没有更多卡片，显示空消息
+                        const favoriteList = document.querySelector('.favorite-list');
+                        if (favoriteList && favoriteList.children.length === 0) {
+                            location.reload(); // 重新加载页面以显示空消息
+                        }
+                    } else {
+                        console.error('Error:', data.error);
+                        if (data.error) {
+                            alert(data.error);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('操作失败，请稍后重试');
+                }
+            });
+        });
+    });
+    </script>
     <style>
         /* 收藏清單樣式 */
         
@@ -203,12 +319,12 @@ $favorites = [
                         </div>
                         <?php if (empty($favorites)) { ?>
                             <div class="empty-message">
-                                <span class="material-symbols-rounded">favorite</span>
+                                
                                 <h3 class="headline-small">您的清單目前為空</h3>
                                 <p class="body-large">在城市頁面點選心心圖標，將您喜愛的目的地添加到這裡！</p>
                                 <a href="cities.php" class="btn btn-outline">
                                     <span class="label-medium">探索城市</span>
-                                    <span class="material-symbols-rounded" aria-hidden="true">arrow_outward</span>
+                                    
                                 </a>
                             </div>
                         <?php } else { ?>
@@ -219,6 +335,9 @@ $favorites = [
                                             <figure class="img-holder" style="--width: 585; --height: 390;">
                                                 <img src="<?php echo $city['image']; ?>" width="585" height="390" alt="<?php echo htmlspecialchars($city['title']); ?>" class="img-cover">
                                             </figure>
+                                            <button type="button" class="icon-btn fav-btn favorited" aria-label="remove from favorite" data-city="<?php echo $city['name']; ?>">
+                                                <span class="material-symbols-rounded" style="color: #ff4d4d;" aria-hidden="true">favorite</span>
+                                            </button>
                                         </div>
                                         <div class="card-content">
                                             <span class="title-large"><?php echo $city['name']; ?></span>
