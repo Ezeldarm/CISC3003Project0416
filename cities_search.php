@@ -130,7 +130,9 @@ if (!empty($searchTerm)) {
                                     <div class="card">
                                         <div class="card-banner">
                                             <figure class="img-holder" style="--width: 585; --height: 390;">
-                                                <img src="<?php echo htmlspecialchars($city['image']); ?>" width="585" height="390" alt="<?php echo htmlspecialchars($city['title']); ?>" class="img-cover">
+                                                <a href="specific_cities.php?city=<?php echo urlencode($city['name']); ?>">
+                                                    <img src="<?php echo htmlspecialchars($city['image']); ?>" width="585" height="390" alt="<?php echo htmlspecialchars($city['title']); ?>" class="img-cover">
+                                                </a>
                                             </figure>
                                             <?php if (!empty($city['badge'])): ?>
                                                 <span class="badge label-medium"><?php echo htmlspecialchars($city['badge']); ?></span>
@@ -141,7 +143,7 @@ if (!empty($searchTerm)) {
                                         </div>
                                         <div class="card-content">
                                             <span class="title-large"><?php echo htmlspecialchars($city['name']); ?></span>
-                                            <h3><a href="#" class="title-small card-title"><?php echo htmlspecialchars($city['title']); ?></a></h3>
+                                            <h3><a href="specific_cities.php?city=<?php echo urlencode($city['name']); ?>" class="title-small card-title"><?php echo htmlspecialchars($city['title']); ?></a></h3>
                                             <address class="body-medium card-text"><?php echo htmlspecialchars($city['description']); ?></address>
                                         </div>
                                     </div>

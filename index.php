@@ -28,7 +28,6 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/script.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -71,7 +70,9 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
                             <div class="card">
                                 <div class="card-banner">
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-1.jpg" width="585" height="390" alt="COVA Home Realty" class="img-cover">
+                                        <a href="specific_cities.php?city=Hong+Kong">
+                                            <img src="./assets/images/property-1.jpg" width="585" height="390" alt="COVA Home Realty" class="img-cover">
+                                        </a>
                                     </figure>
                                     <span class="badge label-medium">New</span>
                                     <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Hong Kong">
@@ -80,14 +81,16 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
                                 </div>
                                 <div class="card-content">
                                     <span class="title-large">Hong Kong</span>
-                                    <h3><a href="#" class="title-small card-title">Hong Kong SAR</a></h3>
+                                    <h3><a href="specific_cities.php?city=Hong+Kong" class="title-small card-title">Hong Kong SAR</a></h3>
                                     <address class="body-medium card-text">Disneyland, Victoria Peak, Ocean Park...</address>
                                 </div>
                             </div>
                             <div class="card">
                                 <div class="card-banner">
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-2.jpg" width="585" height="390" alt="Exit Realty" class="img-cover">
+                                        <a href="specific_cities.php?city=Macao">
+                                            <img src="./assets/images/property-2.jpg" width="585" height="390" alt="Exit Realty" class="img-cover">
+                                        </a>
                                     </figure>
                                     <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Macao">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
@@ -95,14 +98,16 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
                                 </div>
                                 <div class="card-content">
                                     <span class="title-large">Macao</span>
-                                    <h3><a href="#" class="title-small card-title">Macao SAR</a></h3>
+                                    <h3><a href="specific_cities.php?city=Macao" class="title-small card-title">Macao SAR</a></h3>
                                     <address class="body-medium card-text">Ruins of St. Paul's, Grand Lisboa...</address>
                                 </div>
                             </div>
                             <div class="card">
                                 <div class="card-banner">
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-3.jpg" width="585" height="390" alt="The Real Estate Group" class="img-cover">
+                                        <a href="specific_cities.php?city=Shanghai">
+                                            <img src="./assets/images/property-3.jpg" width="585" height="390" alt="The Real Estate Group" class="img-cover">
+                                        </a>
                                     </figure>
                                     <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Shanghai">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
@@ -110,14 +115,16 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
                                 </div>
                                 <div class="card-content">
                                     <span class="title-large">Shanghai</span>
-                                    <h3><a href="#" class="title-small card-title">Shanghai, China</a></h3>
+                                    <h3><a href="specific_cities.php?city=Shanghai" class="title-small card-title">Shanghai, China</a></h3>
                                     <address class="body-medium card-text">The Bund, Oriental Pearl Tower, Yu Garden...</address>
                                 </div>
                             </div>
                             <div class="card">
                                 <div class="card-banner">
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="./assets/images/property-4.jpg" width="585" height="390" alt="757 Realty" class="img-cover">
+                                        <a href="specific_cities.php?city=Beijing">
+                                            <img src="./assets/images/property-4.jpg" width="585" height="390" alt="757 Realty" class="img-cover">
+                                        </a>
                                     </figure>
                                     <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Beijing">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
@@ -125,7 +132,7 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
                                 </div>
                                 <div class="card-content">
                                     <span class="title-large">Beijing</span>
-                                    <h3><a href="#" class="title-small card-title">Beijing, China</a></h3>
+                                    <h3><a href="specific_cities.php?city=Beijing" class="title-small card-title">Beijing, China</a></h3>
                                     <address class="body-medium card-text">Great Wall, Forbidden City, Tiananmen Square...</address>
                                 </div>
                             </div>
@@ -135,13 +142,11 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
                 <section class="section feature" aria-labelledby="feature-label">
                     <div class="container">
                         <figure class="feature-banner">
-                            <img src="./assets/images/feature-banner-1.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">       
+                            <img src="./assets/images/feature-banner-1.jpg" width="1020" height="690" loading="lazy" alt="feature banner" class="img-cover">
                         </figure>
                         <div class="feature-content">
                             <p class="title-small feature-text">Article</p>
-                            <a href="article.php">
                             <h2 class="headline-large" id="feature-label">China Travel 101: Essential Prep Before You Go</h2>
-                            </a>
                             <p class="body-large feature-text">
                                 Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here's your must-know checklist to avoid surprises and travel like a savvy explorer.
                             </p>

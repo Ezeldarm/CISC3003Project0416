@@ -115,7 +115,9 @@ include 'cities_data.php'; // 包含城市数据
                             <div class="card">
                                 <div class="card-banner">
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
-                                        <img src="<?php echo htmlspecialchars($city['image']); ?>" width="585" height="390" alt="<?php echo htmlspecialchars($city['title']); ?>" class="img-cover">
+                                        <a href="specific_cities.php?city=<?php echo urlencode($city['name']); ?>">
+                                            <img src="<?php echo htmlspecialchars($city['image']); ?>" width="585" height="390" alt="<?php echo htmlspecialchars($city['title']); ?>" class="img-cover">
+                                        </a>
                                     </figure>
                                     <?php if (!empty($city['badge'])): ?>
                                         <span class="badge label-medium"><?php echo htmlspecialchars($city['badge']); ?></span>
@@ -126,7 +128,7 @@ include 'cities_data.php'; // 包含城市数据
                                 </div>
                                 <div class="card-content">
                                     <span class="title-large"><?php echo htmlspecialchars($city['name']); ?></span>
-                                    <h3><a href="#" class="title-small card-title"><?php echo htmlspecialchars($city['title']); ?></a></h3>
+                                    <h3><a href="specific_cities.php?city=<?php echo urlencode($city['name']); ?>" class="title-small card-title"><?php echo htmlspecialchars($city['title']); ?></a></h3>
                                     <address class="body-medium card-text"><?php echo htmlspecialchars($city['description']); ?></address>
                                 </div>
                             </div>
@@ -141,9 +143,7 @@ include 'cities_data.php'; // 包含城市数据
                         </figure>
                         <div class="feature-content">
                             <p class="title-small feature-text">Article</p>
-                            <a href="article.php">
                             <h2 class="headline-large" id="feature-label">China Travel 101: Essential Prep Before You Go</h2>
-                            </a>
                             <p class="body-large feature-text">
                                 Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here's your must-know checklist to avoid surprises and travel like a savvy explorer.
                             </p>
