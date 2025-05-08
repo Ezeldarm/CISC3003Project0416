@@ -320,10 +320,10 @@ try {
                         <?php if (empty($favorites)) { ?>
                             <div class="empty-message">
                                 
-                                <h3 class="headline-small">您的清單目前為空</h3>
-                                <p class="body-large">在城市頁面點選心心圖標，將您喜愛的目的地添加到這裡！</p>
+                                <h3 class="headline-small">Your list is currently empty</h3>
+                                <p class="body-large">Click the heart icon on city pages to add your favorite destinations here!</p>
                                 <a href="cities.php" class="btn btn-outline">
-                                    <span class="label-medium">探索城市</span>
+                                    <span class="label-medium">Explore Cities</span>
                                     
                                 </a>
                             </div>

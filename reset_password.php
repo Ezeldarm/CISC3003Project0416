@@ -1,5 +1,13 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once 'db_config.php';
+
+if (!$link) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
 
 $token = $new_password = $confirm_password = "";
 $message = "";
@@ -11,13 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirm_password = trim($_POST["confirm_password"]);
 
     if (empty($token)) {
-        $message = "無效的重置令牌。";
+        $message = "Invalid reset token.";
     } elseif (empty($new_password)) {
-        $message = "請輸入新密碼。";
+        $message = "Please enter a new password.";
     } elseif (strlen($new_password) < 6) {
-        $message = "密碼至少需要6個字元。";
+        $message = "Password must be at least 6 characters.";
     } elseif ($new_password !== $confirm_password) {
-        $message = "兩次輸入的密碼不一致。";
+        $message = "Passwords do not match.";
     } else {
         $sql = "SELECT id FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()";
         if ($stmt = mysqli_prepare($link, $sql)) {
@@ -34,22 +42,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
                         mysqli_stmt_bind_param($stmt_update, "si", $hashed_password, $user_id);
                         if (mysqli_stmt_execute($stmt_update)) {
-                            $message = "密碼已成功重置！請使用新密碼登錄。";
+                            $message = "Password has been reset successfully! Please login with your new password.";
                             $status = "success";
                             mysqli_stmt_close($stmt_update);
                             mysqli_close($link);
                             header("location: login.php");
                             exit();
                         } else {
-                            $message = "更新密碼失敗，請稍後再試。";
+                            $message = "Failed to update password, please try again later.";
                         }
                         mysqli_stmt_close($stmt_update);
                     }
                 } else {
-                    $message = "無效或已過期的重置連結，請重新申請。";
+                    $message = "Invalid or expired reset link, please request a new one.";
                 }
             } else {
-                $message = "查詢令牌時出錯，請稍後再試。";
+                $message = "Error verifying token, please try again later.";
             }
             mysqli_stmt_close($stmt);
         }
@@ -60,23 +68,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 } else {
     if (isset($_GET['token']) && !empty($_GET['token'])) {
-        $token = $_GET['token'];
+        $token = trim($_GET['token']);
         $sql = "SELECT id FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()";
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "s", $token);
             if (mysqli_stmt_execute($stmt)) {
                 mysqli_stmt_store_result($stmt);
-                if (mysqli_stmt_num_rows($stmt) != 1) {
-                    $message = "無效或已過期的重置連結，請重新申請。";
+                if (mysqli_stmt_num_rows($stmt) == 1) {
+                    // Validation passed, redirect to reset_password.html with token
+                    mysqli_stmt_close($stmt);
+                    mysqli_close($link);
+                    header("location: reset_password.html?token=" . urlencode($token));
+                    exit();
+                } else {
+                    $message = "Invalid or expired reset link, please request a new one.";
                     $status = "error";
                     mysqli_stmt_close($stmt);
                     mysqli_close($link);
                     header("location: forgot_password.html?message=" . urlencode($message) . "&status=" . $status);
                     exit();
                 }
-                mysqli_stmt_close($stmt);
             } else {
-                $message = "驗證連結時出錯，請稍後再試。";
+                $message = "Error verifying link, please try again later.";
                 $status = "error";
                 mysqli_stmt_close($stmt);
                 mysqli_close($link);
@@ -86,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         mysqli_close($link);
     } else {
-        $message = "缺少重置令牌，請通過忘記密碼頁面申請。";
+        $message = "Missing reset token, please request through the forgot password page.";
         $status = "error";
         mysqli_close($link);
         header("location: forgot_password.html?message=" . urlencode($message) . "&status=" . $status);
