@@ -43,7 +43,9 @@
     <div class="footer-bottom">
         <div class="container">
             <p class="copyright body-medium" style="text-align:center;">
-                © 2025 WebMaster Partners.All rights reserved. <br> CISC3003 Web Programming - 2025: Pair 12 DC328536 ZHONG YUZHANG | DC326958 XIE YI | Pair 10 DC326264 CHEANG NGOU HIN | DC325022 PAN YANGSHEN
+                © 2025 WebMaster Partners.All rights reserved. <br> 
+                CISC3003 Web Programming - 2025: Group 02 <br>
+                Pair 12 DC328536 ZHONG YUZHANG | DC326958 XIE YI | Pair 10 DC326264 CHEANG NGOU HIN | DC325022 PAN YANGSHEN
             </p>
         </div>
     </div>
