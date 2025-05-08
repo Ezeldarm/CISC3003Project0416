@@ -17,6 +17,81 @@ session_start();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0">
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/script.js" defer></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const favButtons = document.querySelectorAll('.fav-btn');
+        
+        // 获取用户已收藏的城市
+        async function getFavoriteCities() {
+            try {
+                const response = await fetch('get_favorites.php');
+                const data = await response.json();
+                if (data.success) {
+                    return data.favorites;
+                }
+                return [];
+            } catch (error) {
+                console.error('Error:', error);
+                return [];
+            }
+        }
+
+        // 初始化收藏按钮状态
+        async function initializeFavoriteButtons() {
+            const favorites = await getFavoriteCities();
+            favButtons.forEach(button => {
+                const cityName = button.getAttribute('data-city');
+                if (favorites.includes(cityName)) {
+                    button.classList.add('favorited');
+                    button.querySelector('.material-symbols-rounded').style.color = '#ff4d4d';
+                }
+            });
+        }
+
+        // 初始化按钮状态
+        initializeFavoriteButtons();
+        
+        favButtons.forEach(button => {
+            button.addEventListener('click', async function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const cityName = this.getAttribute('data-city');
+                const isFavorited = this.classList.contains('favorited');
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('city_name', cityName);
+                    formData.append('action', isFavorited ? 'remove' : 'add');
+                    
+                    const response = await fetch('toggle_favorite.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    console.log('Response:', data); // 添加调试日志
+                    
+                    if (data.success) {
+                        if (isFavorited) {
+                            this.classList.remove('favorited');
+                            this.querySelector('.material-symbols-rounded').style.color = '#666';
+                        } else {
+                            this.classList.add('favorited');
+                            this.querySelector('.material-symbols-rounded').style.color = '#ff4d4d';
+                        }
+                    } else if (data.error === 'not_logged_in') {
+                        window.location.href = 'login.php';
+                    } else {
+                        console.error('Error:', data.error);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+    </script>
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -41,7 +116,7 @@ session_start();
                                         <img src="./assets/images/property-1.jpg" width="585" height="390" alt="COVA Home Realty" class="img-cover">
                                     </figure>
                                     <span class="badge label-medium">New</span>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Hong Kong">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -56,7 +131,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-2.jpg" width="585" height="390" alt="Exit Realty" class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Macao">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -71,7 +146,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-3.jpg" width="585" height="390" alt="The Real Estate Group" class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Shanghai">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -86,7 +161,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-4.jpg" width="585" height="390" alt="757 Realty" class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Beijing">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -101,7 +176,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-5.jpg" width="585" height="390" alt="Beach Pros Realty Inc." class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Lijiang">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -116,7 +191,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-6.jpg" width="585" height="390" alt="Keller Williams Elite Town Center" class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Chengdu">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -131,7 +206,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-7.jpg" width="585" height="390" alt="All Pros Real Estate" class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Guangzhou">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -146,7 +221,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-8.jpg" width="585" height="390" alt="FIT Realty" class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Harbin">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -167,7 +242,7 @@ session_start();
                         <div class="feature-content">
                             <h2 class="headline-medium" id="feature-label">We Specialize In Quality Home Renovations</h2>
                             <p class="body-large feature-text">
-                                Looking to renovate your home to reflect your style and personality? Look no further than our team of experts who specialize in quality home renovations to transform your space into a dream home you’ll love. From design to execution.
+                                Looking to renovate your home to reflect your style and personality? Look no further than our team of experts who specialize in quality home renovations to transform your space into a dream home you'll love. From design to execution.
                             </p>
                             <ul class="feature-list">
                                 <li class="feautre-item">
@@ -198,7 +273,7 @@ session_start();
                         <div class="feature-content">
                             <h2 class="headline-medium" id="feature-label-2">We Are Experts In Historic Home Renovations</h2>
                             <p class="body-large feature-text">
-                                Looking to renovate your home to reflect your style and personality? Look no further than our team of experts who specialize in quality home renovations to transform your space into a dream home you’ll love. From design to execution.
+                                Looking to renovate your home to reflect your style and personality? Look no further than our team of experts who specialize in quality home renovations to transform your space into a dream home you'll love. From design to execution.
                             </p>
                             <ul class="feature-list">
                                 <li class="feautre-item">

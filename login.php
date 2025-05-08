@@ -356,20 +356,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;
                             $_SESSION["email"] = $email;
                             $_SESSION["email_verified"] = $email_verified; // 存储邮箱验证状态
+                            $_SESSION["user_id"] = $id; // 添加user_id到session
                             
-                            // 检查邮箱是否已验证 (如果需要强制验证)
-                            // if(!$email_verified){
-                            //     $login_err = "请先验证您的邮箱地址.";
-                            //     // 可以选择销毁 session 并重定向
-                            //     session_destroy();
-                            // } else {
-                            //     // 重定向到用户欢迎页面或首页
-                            //     header("location: index.php");
-                            //     exit();
-                            // }
-
-                            // 暂时不强制邮箱验证，直接重定向到首页
-                            header("location: index.php");
+                            // 检查是否有重定向URL
+                            if(isset($_SESSION['redirect_after_login'])) {
+                                $redirect_url = $_SESSION['redirect_after_login'];
+                                unset($_SESSION['redirect_after_login']);
+                                header("location: " . $redirect_url);
+                            } else {
+                                header("location: index.php");
+                            }
                             exit();
 
                         } else{

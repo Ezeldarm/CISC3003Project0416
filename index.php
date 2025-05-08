@@ -1,5 +1,15 @@
 <?php
 session_start();
+
+// 如果用户未登录且尝试访问需要登录的页面，保存当前URL并重定向到登录页面
+$protected_pages = ['mylist.php', 'mypost.php', 'profile.php'];
+$current_page = basename($_SERVER['PHP_SELF']);
+
+if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
+    $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
+    header('Location: login.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +73,7 @@ session_start();
                                         <img src="./assets/images/property-1.jpg" width="585" height="390" alt="COVA Home Realty" class="img-cover">
                                     </figure>
                                     <span class="badge label-medium">New</span>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Hong Kong">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -78,7 +88,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-2.jpg" width="585" height="390" alt="Exit Realty" class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Macao">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -93,7 +103,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-3.jpg" width="585" height="390" alt="The Real Estate Group" class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Shanghai">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -108,7 +118,7 @@ session_start();
                                     <figure class="img-holder" style="--width: 585; --height: 390;">
                                         <img src="./assets/images/property-4.jpg" width="585" height="390" alt="757 Realty" class="img-cover">
                                     </figure>
-                                    <button class="icon-btn fav-btn" aria-label="add to favorite" data-toggle-btn>
+                                    <button type="button" class="icon-btn fav-btn" aria-label="add to favorite" data-city="Beijing">
                                         <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
                                     </button>
                                 </div>
@@ -130,7 +140,7 @@ session_start();
                             <p class="title-small feature-text">Article</p>
                             <h2 class="headline-large" id="feature-label">China Travel 101: Essential Prep Before You Go</h2>
                             <p class="body-large feature-text">
-                                Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here’s your must-know checklist to avoid surprises and travel like a savvy explorer.
+                                Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here's your must-know checklist to avoid surprises and travel like a savvy explorer.
                             </p>
                             <ul class="feature-list">
                                 <li class="feautre-item">
@@ -204,7 +214,7 @@ session_start();
                                         <a href="#">Navigating Hong Kong Like a Local</a>
                                     </h4>
                                     <p class="body-large post-text">
-                                        Hong Kong was a blast! Spent my first day hiking Dragon’s Back—stunning views and not too crowded. Then hit the street markets in Mong Kok for some bargain souvenirs and the best dim sum at Tim Ho Wan. Pro tip: get a local SIM card at 7-Eleven for cheap data... 
+                                        Hong Kong was a blast! Spent my first day hiking Dragon's Back—stunning views and not too crowded. Then hit the street markets in Mong Kok for some bargain souvenirs and the best dim sum at Tim Ho Wan. Pro tip: get a local SIM card at 7-Eleven for cheap data... 
                                     </p>
                                 </div>
                             </li>
@@ -220,10 +230,10 @@ session_start();
                                 </div>
                                 <div class="post-content">
                                     <h4 class="title-medium post-title">
-                                        <a href="#">Chasing History in Xi’an</a>
+                                        <a href="#">Chasing History in Xi'an</a>
                                     </h4>
                                     <p class="body-large post-text">
-                                        Xi’an stole my heart! The Terracotta Warriors were mind-blowing—definitely worth the hype. Cycled around the ancient city wall for a unique perspective, and the Muslim Quarter’s food stalls were a highlight (lamb skewers, anyone?). Highly recommend downloading DiDi for easy rides... 
+                                        Xi'an stole my heart! The Terracotta Warriors were mind-blowing—definitely worth the hype. Cycled around the ancient city wall for a unique perspective, and the Muslim Quarter's food stalls were a highlight (lamb skewers, anyone?). Highly recommend downloading DiDi for easy rides... 
                                     </p>
                                 </div>
                             </li>
@@ -375,5 +385,81 @@ session_start();
         </main>
         <?php include 'footer.php'; ?>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const favButtons = document.querySelectorAll('.fav-btn');
+        
+        // 获取用户已收藏的城市
+        async function getFavoriteCities() {
+            try {
+                const response = await fetch('get_favorites.php');
+                const data = await response.json();
+                if (data.success) {
+                    return data.favorites;
+                }
+                return [];
+            } catch (error) {
+                console.error('Error:', error);
+                return [];
+            }
+        }
+
+        // 初始化收藏按钮状态
+        async function initializeFavoriteButtons() {
+            const favorites = await getFavoriteCities();
+            favButtons.forEach(button => {
+                const cityName = button.getAttribute('data-city');
+                if (favorites.includes(cityName)) {
+                    button.classList.add('favorited');
+                    button.querySelector('.material-symbols-rounded').style.color = '#ff4d4d';
+                }
+            });
+        }
+
+        // 初始化按钮状态
+        initializeFavoriteButtons();
+        
+        favButtons.forEach(button => {
+            button.addEventListener('click', async function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const cityName = this.getAttribute('data-city');
+                const isFavorited = this.classList.contains('favorited');
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('city_name', cityName);
+                    formData.append('action', isFavorited ? 'remove' : 'add');
+                    
+                    const response = await fetch('toggle_favorite.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    console.log('Response:', data); // 添加调试日志
+                    
+                    if (data.success) {
+                        if (isFavorited) {
+                            this.classList.remove('favorited');
+                            this.querySelector('.material-symbols-rounded').style.color = '#666';
+                        } else {
+                            this.classList.add('favorited');
+                            this.querySelector('.material-symbols-rounded').style.color = '#ff4d4d';
+                        }
+                    } else if (data.error === 'not_logged_in') {
+                        window.location.href = 'login.php';
+                    } else {
+                        console.error('Error:', data.error);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>
