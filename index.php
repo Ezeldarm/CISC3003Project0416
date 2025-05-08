@@ -146,7 +146,7 @@ if (in_array($current_page, $protected_pages) && !isset($_SESSION['user_id'])) {
                         </figure>
                         <div class="feature-content">
                             <p class="title-small feature-text">Article</p>
-                            <h2 class="headline-large" id="feature-label">China Travel 101: Essential Prep Before You Go</h2>
+                            <h2 class="headline-large" id="feature-label"><a href='article.php'>China Travel 101: Essential Prep Before You Go</a></h2>
                             <p class="body-large feature-text">
                                 Traveling to China is an incredible experience—but a little preparation goes a long way. From payments to apps, here's your must-know checklist to avoid surprises and travel like a savvy explorer.
                             </p>

@@ -34,7 +34,7 @@
   },
   "Shanghai": {
     "title": "Shanghai, China",
-    "description": "魔都 经济金融中心",
+    "description": "Economic and Financial Hub",
     "hero_image": "./assets/images/property-3.jpg",
     "overview": "上海是中国最大的城市和经济中心，也是全球重要的金融、贸易和航运枢纽。作为长江三角洲城市群的核心城市，上海以其现代化的天际线、丰富的历史建筑和多元文化而闻名。外滩的万国建筑博览群与陆家嘴的摩天大楼形成鲜明对比，展现了城市的过去与未来。",
     "attractions": [{"name": "The Bund", "image": "./assets/images/sh_1.jpg", "desc": "上海外滩，万国建筑博览", "website": ""}, {"name": "Oriental Pearl Tower", "image": "./assets/images/sh_2.jpg", "desc": "上海标志性电视塔", "website": ""}, {"name": "Yu Garden", "image": "./assets/images/sh_3.jpg", "desc": "江南古典园林代表作", "website": ""}, {"name": "Nanjing Road", "image": "./assets/images/sh_4.jpg", "desc": "中国最繁华商业街", "website": ""}, {"name": "Shanghai Disneyland", "image": "./assets/images/sh_5.jpg", "desc": "中国大陆首座迪士尼", "website": ""}, {"name": "Tianzifang", "image": "./assets/images/sh_6.jpg", "desc": "文艺小资聚集地", "website": ""}],
